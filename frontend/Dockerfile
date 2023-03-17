@@ -3,9 +3,9 @@ FROM node:16-alpine as builder
 
 WORKDIR /app
 
-COPY package.json package-lock.json .npmrc /app/
+COPY package.json package-lock.json /app/
 
-RUN npm ci
+RUN npm install
 
 COPY . /app
 
@@ -16,8 +16,6 @@ RUN npm run build
 FROM node:16-alpine
 
 WORKDIR /app
-
-RUN apk add --no-cache bash
 
 COPY --from=builder /app /app
 

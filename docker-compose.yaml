@@ -4,11 +4,14 @@ services:
     container_name: "uts-fr"
     build: 
       context: ./frontend
+      dockerfile: ./Dockerfile
     working_dir: /app
     ports:
       - 8080:8080
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/app
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
+      - /app/node_modules
+      - /app/dist
     tty: true
