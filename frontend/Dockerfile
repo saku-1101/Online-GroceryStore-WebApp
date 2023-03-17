@@ -3,10 +3,9 @@ FROM node:16-alpine as builder
 
 WORKDIR /app
 
-COPY package.json /app
-COPY package-lock.json /app
+COPY package.json package-lock.json .npmrc /app/
 
-RUN npm install
+RUN npm ci
 
 COPY . /app
 
