@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  frontend:
+    container_name: "uts-fr"
+    build: 
+      context: ./frontend
+    working_dir: /app
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend:/app
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    tty: true
