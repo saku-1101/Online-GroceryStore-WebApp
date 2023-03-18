@@ -23,4 +23,6 @@ ENV HOST 0.0.0.0
 ENV PORT 8080
 EXPOSE 8080
 
-CMD [ "npm", "run", "preview" ]
+CMD [ "npm", "run", "dev" ]
+
+# docker run -it -p 8080:8080 -e WATCHPACK_POLLING=true -v "$(pwd)"/src:/app/src --name uts-fr uts-fr
