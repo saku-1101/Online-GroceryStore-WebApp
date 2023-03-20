@@ -13,16 +13,16 @@ services:
     build: ./backend
     volumes:
       - ./backend/src:/data
-    # depends_on:
-    #   - db
-  # db:
-  #   build: ./db
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ./db:/var/lib/mysql
+    depends_on:
+      - db
+  db:
+    build: ./db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-vol:/var/lib/mysql
   frontend:
-    container_name: "uts-frontend"
+    container_name: "frontend"
     build: 
       context: ./frontend
       dockerfile: ./Dockerfile
@@ -38,3 +38,5 @@ services:
       - /app/node_modules
       - /app/dist
     tty: true
+volumes:
+  mysql-vol:

@@ -1,5 +1,11 @@
-FROM mysql:latest
-ENV MYSQL_ROOT_PASSWORD=password
-ENV MYSQL_DATABASE=database
-ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=password
+FROM mysql/mysql-server:8.0
+
+ENV MYSQL_DATABASE=laravel \
+    MYSQL_PASSWORD=password \
+    MYSQL_USER=user \
+    MYSQL_ROOT_PASSWORD=MYSQL_PASSWORD \
+    TZ=Australia/Sydney
+
+COPY ./my.cnf /etc/my.cnf
+
+RUN chmod 644 /etc/my.cnf
