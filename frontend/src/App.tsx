@@ -2,6 +2,7 @@ import { useState, useLayoutEffect } from 'react';
 import './App.css';
 import DefaultButton from './components/atoms/DefaultButton';
 import ProductCard from './components/molecules/ProductCard';
+import DoraggableCart from './components/atoms/DoraggableCart';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,7 +36,9 @@ function App() {
         name=""
         tag="inStock"
         description="If a dog chews shoes whose shoes does he choose?"
+        button="Discover more!"
       />
+      <DoraggableCart />
     </div>
   );
 }

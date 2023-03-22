@@ -7,6 +7,7 @@ export default function ProductCard(props: {
   name: string;
   tag: string;
   description: string;
+  button: string;
 }) {
   return (
     <>
@@ -21,7 +22,7 @@ export default function ProductCard(props: {
           </h2>
           <p className="text-neutral justify-start">{props.description}</p>
           <div className="card-actions justify-end">
-            <DefaultButton label="Add" />
+            <DefaultButton label={props.button} />
           </div>
         </div>
       </div>
