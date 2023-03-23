@@ -1,5 +1,3 @@
-import { Theme, Button } from 'react-daisyui';
-
 export default function DefaultButton(props: { label: string }) {
   return (
     <>

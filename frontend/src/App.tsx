@@ -1,8 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import './App.css';
-import DefaultButton from './components/atoms/DefaultButton';
-import ProductCard from './components/molecules/ProductCard';
 import DoraggableCart from './components/atoms/DoraggableCart';
+import CategoryPage from './components/templates/CategoryPage';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -19,25 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-      {/* <p>{data.name}</p> */}
-      <DefaultButton label="Add" />
-      <ProductCard
-        imgUrl="./src/assets/bread.jpg"
-        imgAlt="veg"
-        category="Produces"
-        name=""
-        tag="inStock"
-        description="If a dog chews shoes whose shoes does he choose?"
-        button="Discover more!"
-      />
+      <CategoryPage />
       <DoraggableCart />
     </div>
   );
