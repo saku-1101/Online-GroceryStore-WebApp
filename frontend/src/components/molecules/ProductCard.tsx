@@ -1,4 +1,5 @@
 import DefaultButton from '../atoms/DefaultButton';
+import CountingButton from '../atoms/CountingButton';
 
 export default function ProductCard(props: {
   imgUrl: string;
@@ -23,6 +24,7 @@ export default function ProductCard(props: {
           <p className="text-neutral justify-start">{props.description}</p>
           <div className="card-actions justify-end">
             <DefaultButton label={props.button} />
+            <CountingButton amount={1} />
           </div>
         </div>
       </div>
