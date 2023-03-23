@@ -6,16 +6,13 @@ import './index.css';
 import NavBar from './components/molecules/NavBar';
 import DraggableCart from './components/atoms/DraggableCart';
 import CategoryPage from './components/templates/CategoryPage';
-import Dummy from './components/templates/Dummy';
+import ErrorPage from './error-page';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <CategoryPage />,
-  },
-  {
-    path: '/dummy',
-    element: <Dummy />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
