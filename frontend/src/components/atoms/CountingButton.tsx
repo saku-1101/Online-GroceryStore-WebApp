@@ -7,7 +7,7 @@ export default function CountingButton(props: { amount: number }) {
         <button className="btn btn-primary" onClick={() => setAmount(amount - 1)}>
           -
         </button>
-        <p className="text-2xl text-center align-middle">{amount}</p>
+        <p className="text-2xl text-center align-middle">{props.amount}</p>
         <button className="btn btn-primary" onClick={() => setAmount(amount + 1)}>
           +
         </button>
