@@ -12,9 +12,7 @@ export default function NavBar() {
       </div>
 
       <div className="navbar-end flex">
-        <div className="flex-1 gap-2">
-          <SearchBox />
-        </div>
+        <SearchBox />
         <InsideOfTheCart />
       </div>
     </div>

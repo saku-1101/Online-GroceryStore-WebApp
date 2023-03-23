@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect } from 'react';
 import './App.css';
-import DoraggableCart from './components/atoms/DoraggableCart';
+import DraggableCart from './components/atoms/DraggableCart';
 import CategoryPage from './components/templates/CategoryPage';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <CategoryPage />
-      <DoraggableCart />
+      <DraggableCart />
     </div>
   );
 }
