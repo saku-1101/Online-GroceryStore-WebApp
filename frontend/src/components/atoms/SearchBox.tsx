@@ -2,7 +2,7 @@ import { func } from 'prop-types';
 import { useState } from 'react';
 export default function SearchBox() {
   const [text, setText] = useState('');
-  function handleSubmit(e) {
+  function handleSubmit(e: any) {
     // Prevent the browser from reloading the page
     e.preventDefault();
 

@@ -1,7 +1,7 @@
 import './App.css';
 
-function App(props: { component }) {
-  return <div className="App">{props.component}</div>;
+function App() {
+  return <div className="App"></div>;
 }
 
 export default App;
