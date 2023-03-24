@@ -24,7 +24,6 @@ services:
     volumes:
       - mysql-vol:/var/lib/mysql
   frontend:
-    container_name: 'frontend'
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
