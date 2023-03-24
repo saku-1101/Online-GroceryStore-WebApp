@@ -3,7 +3,7 @@ import PageTitle from '../atoms/PageTitle';
 
 export default function CategoryPage() {
   return (
-    <div className="">
+    <div>
       <PageTitle title="Category" />
       <ProductCard
         imgUrl="./src/assets/bread.jpg"
