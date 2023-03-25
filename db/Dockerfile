@@ -1,7 +1,5 @@
 FROM mysql/mysql-server:8.0
 
-RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
-
 ENV MYSQL_DATABASE=laravel \
     MYSQL_USER=user \
     MYSQL_PASSWORD=secret \

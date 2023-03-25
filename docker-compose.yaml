@@ -19,10 +19,12 @@ services:
       - db
   db:
     build: ./db
+    restart: always
     ports:
       - '3306:3306'
     volumes:
       - mysql-vol:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
   frontend:
     build:
       context: ./frontend
