@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('sample', [SampleController::class, 'getJson']);
+// Route::resource('product', 'ProductController');
+
+// RESTful routing
+Route::resource('product', 'App\Http\Controllers\ProductController');
