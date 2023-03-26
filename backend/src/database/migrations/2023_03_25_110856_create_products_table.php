@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('unit_quantity', 15);
             $table->unsignedBigInteger('in_stock');
             $table->unsignedBigInteger('category');
-            $table->unsignedBigInteger('image');
             $table->string('url', 512);
             $table->timestamps();
         });

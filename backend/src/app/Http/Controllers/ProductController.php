@@ -14,7 +14,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // DBよりBookテーブルの値を全て取得
+      $products = Product::all();
+
+      // compact('book')は['book' => $book]としているのと同意
+      return response()->json(compact('products'));
     }
 
     /**
@@ -55,9 +59,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($product_id)
     {
-        //
+        // DBよりURIパラメータと同じIDを持つBookの情報を取得
+      $product = Product::findOrFail($product_id);
+
+      // 取得した値をビュー「book/edit」に渡す
+      return response() -> json(compact(product));
     }
 
     /**
