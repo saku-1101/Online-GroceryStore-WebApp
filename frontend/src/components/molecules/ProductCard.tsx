@@ -12,7 +12,7 @@ export default function ProductCard(props: {
 }) {
   return (
     <>
-      <div className="card card-compact w-96 bg-base-100 shadow-xl p-0">
+      <div className="card card-compact w-full bg-base-100 shadow-xl p-0">
         <figure>
           <img src={props.imgUrl} alt={props.imgAlt} />
         </figure>
