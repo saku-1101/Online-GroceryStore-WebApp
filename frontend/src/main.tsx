@@ -6,6 +6,7 @@ import Root from './routes/root';
 import CategoryPage from './components/templates/CategoryPage';
 import ErrorPage from './error-page';
 import Dummy from './components/templates/Dummy';
+import ProductsPage from './components/templates/ProductsPage';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: '/category',
         element: <CategoryPage />,
+      },
+      {
+        path: '/products',
+        element: <ProductsPage />,
       },
       {
         path: '/dummy',
