@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,6 @@ Route::get('/product/category', [ProductController::class, 'getCategory']);
 Route::get('/product/category/{category}', [ProductController::class, 'getProductsByCategory']);
 Route::get('/product/search', [ProductController::class, 'search']);
 Route::resource('product', 'App\Http\Controllers\ProductController');
+
+Route::get('/order/add', [OrderController::class, 'addProduct']);
+Route::resource('order', 'App\Http\Controllers\OrderController');
