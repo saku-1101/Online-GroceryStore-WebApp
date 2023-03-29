@@ -11,8 +11,10 @@ class Detail extends Model
 
     protected $table = 'order_details';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'detail_id';
 
+    protected $fillable = ['order_id', 'product_id', 'unit_price', 'quantity'];
+    
     public function orders()
     {
         return $this->belongsTo(Order::class);
