@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * CAUTION: The table is already made in SQL.
+     * CAUTION: This is just an explicit definition.
      * Run the migrations.
      *
      * @return void
