@@ -20,7 +20,7 @@ class ProductController extends Controller
       // compact('product')は['product' => $product]としているのと同意
       return response()->json(compact('products'));
     }
-    
+
     /**
      * Display a listing of the category.
      *
@@ -47,6 +47,18 @@ class ProductController extends Controller
         $products = Product::where('category', $category)->get();
 
         // compact('products')は['products' => $products]としているのと同意
+        return response()->json(compact('products'));
+    }
+    /**
+     * Display products that match with the provided keyword.
+     *
+     * @param  string  $query
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $products = Product::where('product_name', 'LIKE', "%{$query}%")->get();
         return response()->json(compact('products'));
     }
 
