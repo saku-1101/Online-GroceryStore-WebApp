@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->decimal('total_amount', 10, 2);
-            $table->dateTime('order_date');
+            $table->id('order_id');
+            $table->integer('total_amount') -> default('0');
+            $table->dateTime('order_date')->useCurrent()->useCurrentOnUpdate();;
             $table->timestamps();
         });
     }
