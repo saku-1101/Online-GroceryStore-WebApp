@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('sample', [SampleController::class, 'getJson']);
-// Route::resource('product', 'ProductController');
 
 // RESTful routing
+Route::get('/product/category', [ProductController::class, 'getCategory']);
 Route::resource('product', 'App\Http\Controllers\ProductController');

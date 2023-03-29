@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('sample', [SampleController::class, 'getJson']);
+
+Route::get('/product/category', [ProductController::class, 'getCategory']);
+Route::resource('product', 'App\Http\Controllers\ProductController');

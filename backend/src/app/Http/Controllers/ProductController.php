@@ -14,12 +14,42 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // DBよりBookテーブルの値を全て取得
+        // DBよりproductテーブルの値を全て取得
       $products = Product::all();
 
-      // compact('book')は['book' => $book]としているのと同意
+      // compact('product')は['product' => $product]としているのと同意
       return response()->json(compact('products'));
     }
+
+    /**
+     * Display a listing of the category.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCategory()
+    {
+    // DBよりProductテーブルのcategoryとurlの値を重複を除いて取得
+    $products = Product::select('category', 'url')->distinct()->get();
+
+    // compact('products')は['products' => $products]としているのと同意
+    return response()->json(compact('products'));
+    }
+    
+    /**
+     * Display products of the specified category.
+     *
+     * @param  int  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function getProductsByCategory($category)
+    {
+        // DBより指定されたcategoryのProductテーブルの値を取得
+        $products = Product::where('category', $category)->get();
+
+        // compact('products')は['products' => $products]としているのと同意
+        return response()->json(compact('products'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,10 +91,10 @@ class ProductController extends Controller
      */
     public function edit($product_id)
     {
-        // DBよりURIパラメータと同じIDを持つBookの情報を取得
+        // DBよりURIパラメータと同じIDを持つproductの情報を取得
       $product = Product::findOrFail($product_id);
 
-      // 取得した値をビュー「book/edit」に渡す
+      // 取得した値をビュー「product/edit」に渡す
       return response() -> json(compact(product));
     }
 
