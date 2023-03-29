@@ -22,4 +22,5 @@ Route::get('sample', [SampleController::class, 'getJson']);
 
 // RESTful routing
 Route::get('/product/category', [ProductController::class, 'getCategory']);
+Route::get('/product/category/{category}', [ProductController::class, 'getProductsByCategory']);
 Route::resource('product', 'App\Http\Controllers\ProductController');

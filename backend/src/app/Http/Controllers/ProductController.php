@@ -20,7 +20,7 @@ class ProductController extends Controller
       // compact('product')は['product' => $product]としているのと同意
       return response()->json(compact('products'));
     }
-
+    
     /**
      * Display a listing of the category.
      *
@@ -49,7 +49,6 @@ class ProductController extends Controller
         // compact('products')は['products' => $products]としているのと同意
         return response()->json(compact('products'));
     }
-
 
     /**
      * Show the form for creating a new resource.
