@@ -55,13 +55,53 @@ class OrderController extends Controller
             'total_amount' => $order->total_amount,
         ]);
     }
-    /**
-     * Remove the products from the order table.
-     * Update the order details.
+
+     /**
+     * Display the specified order.
+     *
+     * @param  int  $orderId
      * @return \Illuminate\Http\Response
      */
-    public function removeProduct()
+    public function show($order_id)
     {
+        try {
+            // 注文情報を取得
+            $order = Order::findOrFail($order_id);
+
+            // 注文詳細情報を取得
+            try {
+                $orderDetails = Detail::where('order_id', $order_id)->get();
+    
+                if ($orderDetails->isEmpty()) {
+                    throw new \Exception('No order details found for the given order ID');
+                }
+    
+                return response()->json(['order' => $order, 'order_details' => $orderDetails], 200);
+            } catch (\Exception $e) {
+                return response()->json(['message' => $e->getMessage()], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    /**
+     * Remove an order and its corresponding details from the database.
+     *
+     * @param  int  $order_id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($order_id)
+    {
+        try {
+            $order = Order::findOrFail($order_id);
+            Detail::where('order_id', $order_id)->delete(); // deletes corresponding order details
+            $order->delete(); // deletes the order
+
+            return response() -> json(['message' => 'Order is successfully deleted!']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
         
     }
 }
