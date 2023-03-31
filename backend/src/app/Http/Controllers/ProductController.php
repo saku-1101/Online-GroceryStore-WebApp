@@ -8,76 +8,58 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the products.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        // DBよりBookテーブルの値を全て取得
+        // DBよりproductテーブルの値を全て取得
       $products = Product::all();
 
-      // compact('book')は['book' => $book]としているのと同意
+      // compact('product')は['product' => $product]としているのと同意
       return response()->json(compact('products'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the category.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getCategory()
     {
-        //
+    // DBよりProductテーブルのcategoryとurlの値を重複を除いて取得
+    $products = Product::select('category', 'url')->distinct()->get();
+
+    // compact('products')は['products' => $products]としているのと同意
+    return response()->json(compact('products'));
     }
-
+    
     /**
-     * Store a newly created resource in storage.
+     * Display products of the specific category.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getProductsByCategory($category)
     {
-        //
+        // DBより指定されたcategoryのProductテーブルの値を取得
+        $products = Product::where('category', $category)->get();
+
+        // compact('products')は['products' => $products]としているのと同意
+        return response()->json(compact('products'));
     }
-
     /**
-     * Display the specified resource.
+     * Display products that match with the provided keyword.
      *
-     * @param  \App\Models\Product  $product
+     * @param  string  $query
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function search(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($product_id)
-    {
-        // DBよりURIパラメータと同じIDを持つBookの情報を取得
-      $product = Product::findOrFail($product_id);
-
-      // 取得した値をビュー「book/edit」に渡す
-      return response() -> json(compact(product));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
+        $query = $request->input('query');
+        $products = Product::where('product_name', 'LIKE', "%{$query}%")->get();
+        return response()->json(compact('products'));
     }
 
     /**

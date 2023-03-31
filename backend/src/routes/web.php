@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SampleController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('sample', [SampleController::class, 'getJson']);
-// Route::resource('product', 'ProductController');
 
 // RESTful routing
+Route::get('/product/category', [ProductController::class, 'getCategory']);
+Route::get('/product/category/{category}', [ProductController::class, 'getProductsByCategory']);
+Route::get('/product/search', [ProductController::class, 'search']);
 Route::resource('product', 'App\Http\Controllers\ProductController');
+
+Route::post('/order/add', [OrderController::class, 'addOrder']);
+Route::resource('order', 'App\Http\Controllers\OrderController');

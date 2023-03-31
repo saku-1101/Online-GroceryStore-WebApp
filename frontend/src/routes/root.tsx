@@ -4,9 +4,9 @@ import DraggableCart from '../components/atoms/DraggableCart';
 
 export default function Root() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <NavBar />
-      <div id="detail" className="w-screen flex justify-center">
+      <div id="content" className="w-screen relative">
         <Outlet />
       </div>
       <DraggableCart />

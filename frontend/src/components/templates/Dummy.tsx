@@ -1,3 +1,3 @@
 export default function Dummy() {
-  return <p>Dummy Page</p>;
+  return <p className="text-center">Dummy Page</p>;
 }
