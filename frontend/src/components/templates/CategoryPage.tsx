@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import ProductCard from '../molecules/ProductCard';
 import PageTitle from '../atoms/PageTitle';
-import axios from 'axios';
+import { getCategories } from '../../core/infrastructures/AppApi';
 
 export default function CategoryPage() {
   const [categories, setCategories] = useState([]);
   const setData = async () => {
-    const res = await axios.get('http://localhost:8080/product/category');
-    console.log(res.data.products);
-    setCategories(res.data.products);
+    const res = await getCategories();
+    setCategories(res.products);
   };
   useEffect(() => {
     setData();
@@ -29,6 +28,8 @@ export default function CategoryPage() {
               tag=""
               description=""
               button="Discover more!"
+              uri={'/product/category/' + category.category}
+              isCategory={true}
             />
           ))}
         </div>
