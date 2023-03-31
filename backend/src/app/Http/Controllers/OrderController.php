@@ -17,7 +17,7 @@ class OrderController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function addProduct(Request $request)
+    public function addOrder(Request $request)
     {
         
         // get unique order id, product id and quantity from the request

@@ -29,7 +29,5 @@ Route::get('/product/category/{category}', [ProductController::class, 'getProduc
 Route::get('/product/search', [ProductController::class, 'search']);
 Route::resource('product', 'App\Http\Controllers\ProductController');
 
-Route::get('/order/add', [OrderController::class, 'addProduct']);
-// Route::delete('/order/{order_id}','App\Http\Controllers\OrderController@destroy');
-// Route::delete('/order/delete/{order_id}',[OrderController::class, 'destroy']);
+Route::post('/order/add', [OrderController::class, 'addOrder']);
 Route::resource('order', 'App\Http\Controllers\OrderController');

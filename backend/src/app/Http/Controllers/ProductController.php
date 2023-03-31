@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the products.
      *
      * @return \Illuminate\Http\Response
      */
@@ -36,7 +36,7 @@ class ProductController extends Controller
     }
     
     /**
-     * Display products of the specified category.
+     * Display products of the specific category.
      *
      * @param  int  $category
      * @return \Illuminate\Http\Response
@@ -60,65 +60,6 @@ class ProductController extends Controller
         $query = $request->input('query');
         $products = Product::where('product_name', 'LIKE', "%{$query}%")->get();
         return response()->json(compact('products'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($product_id)
-    {
-        // DBよりURIパラメータと同じIDを持つproductの情報を取得
-      $product = Product::findOrFail($product_id);
-
-      // 取得した値をビュー「product/edit」に渡す
-      return response() -> json(compact(product));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
     }
 
     /**
