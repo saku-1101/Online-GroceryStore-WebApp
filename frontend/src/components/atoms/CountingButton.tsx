@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 export default function CountingButton(props: { amount: number }) {
   const [amount, setAmount] = useState(props.amount);
   return (

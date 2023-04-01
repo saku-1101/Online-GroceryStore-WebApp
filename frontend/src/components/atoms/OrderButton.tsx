@@ -1,10 +1,8 @@
 import { addOrder } from '../../core/infrastructures/AppApi';
 
-export default function OrderButton(props: { label: string; order_id: string; product_id: string; quantity: string }) {
+export default function OrderButton(props: { label: string; order_id: number; product_id: number; quantity: number }) {
   async function addOrderHandler() {
-    console.log('here1');
-    const res = await addOrder(props.order_id, props.product_id, props.quantity);
-    console.log(res);
+    await addOrder(props.order_id.toString(), props.product_id.toString(), props.quantity.toString());
   }
   return (
     <>

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { counterReducer } from '../features/counter/counterSlice';
+import { appReducer } from '../features/counter/appSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer, // state を追加
+    app: appReducer, // state を追加
   },
 });
 
