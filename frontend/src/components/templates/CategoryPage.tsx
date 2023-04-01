@@ -1,3 +1,4 @@
+import { Product } from '../../core/models/Product.model';
 import { useEffect, useState } from 'react';
 import ProductCard from '../molecules/ProductCard';
 import PageTitle from '../atoms/PageTitle';
@@ -18,19 +19,8 @@ export default function CategoryPage() {
       <PageTitle title="Category" />
       <div className="flex justify-center">
         <div className="w-3/4 grid grid-cols-3 gap-10">
-          {categories.map((category) => (
-            <ProductCard
-              key={category.category}
-              imgUrl="src/assets/bread.jpg"
-              imgAlt={category.url}
-              category={category.category}
-              name={category.category}
-              tag=""
-              description=""
-              button="Discover more!"
-              uri={'/product/category/' + category.category}
-              isCategory={true}
-            />
+          {categories.map((category: Product) => (
+            <ProductCard key={category.category} product={category} button="Discover more!" isCategory={true} />
           ))}
         </div>
       </div>
