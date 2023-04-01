@@ -47,7 +47,10 @@ class OrderController extends Controller
             'unit_price' => $unitPrice,
             'quantity' => $quantity,
         ]);
-        
+
+        // Update the quantity of the product
+        $product->in_stock -= $quantity;
+        $product->save();
         
         return response()->json([
             'message' => 'Product added to order.',
