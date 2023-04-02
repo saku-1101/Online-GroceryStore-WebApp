@@ -1,7 +1,6 @@
 import NavMenu from '../atoms/NavMenu';
 import StoreLogo from '../atoms/StoreLogo';
 import SearchBox from '../atoms/SearchBox';
-import InsideOfTheCart from '../atoms/InsideOfTheCart';
 import BreadCrumbs from '../atoms/BreadCrumbs';
 
 export default function NavBar() {
@@ -15,7 +14,6 @@ export default function NavBar() {
 
       <div className="navbar-end flex">
         <SearchBox />
-        <InsideOfTheCart />
       </div>
     </div>
   );

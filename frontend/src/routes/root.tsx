@@ -14,7 +14,6 @@ export default function Root() {
     const res = await getCategories();
     // store にcategoriesを登録
     dispatch(appActions.setCategory(res.products));
-    console.log(res.products);
   };
   useEffect(() => {
     setData();

@@ -9,6 +9,7 @@ import CategoryPage from './components/templates/CategoryPage';
 import ErrorPage from './error-page';
 import Dummy from './components/templates/Dummy';
 import ProductsPage from './components/templates/ProductsPage';
+import SearchResultPage from './components/templates/SearchResultPage';
 import SelectTheCategoryError from './components/templates/SelectTheCategoryError';
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/product/category/:category',
         element: <ProductsPage />,
+      },
+      {
+        path: '/search/result',
+        element: <SearchResultPage />,
       },
       {
         path: '/dummy',

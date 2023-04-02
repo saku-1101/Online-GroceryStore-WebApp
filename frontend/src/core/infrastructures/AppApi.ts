@@ -29,7 +29,7 @@ export function getProductsByCategory(category: string | undefined) {
     });
 }
 
-export function search(text: string) {
+export function search(text: FormDataEntryValue) {
   return instance
     .get('product/search?query=' + text)
     .then(responseBody)

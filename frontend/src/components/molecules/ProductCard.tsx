@@ -52,6 +52,7 @@ export default function ProductCard(props: { product: Product; button: string; i
                   order_id={order_id}
                   product_id={props.product.product_id}
                   quantity={amount}
+                  price={props.product.unit_price}
                   clearAmount={clearAmount.bind(clearAmount)}
                 />
               </>
