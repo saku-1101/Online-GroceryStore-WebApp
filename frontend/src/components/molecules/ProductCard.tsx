@@ -39,7 +39,7 @@ export default function ProductCard(props: { product: Product; button: string; i
           {/* <p className="text-neutral justify-start">{props.description}</p> */}
           <div className="card-actions justify-end">
             {props.isCategory ? (
-              <DefaultButton label={props.button} uri={'/product/category/' + props.product.category} />
+              <DefaultButton label={props.button} category_id={props.product.category} />
             ) : (
               <>
                 <CountingButton

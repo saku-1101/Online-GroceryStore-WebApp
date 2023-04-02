@@ -5,12 +5,14 @@ import type { RootState } from '../../app/store';
 interface AppState {
   order_id: number;
   categories: never[];
+  selected_category: number;
 }
 
 // initial state definition
 const initialState: AppState = {
   order_id: Math.floor(Math.random() * (1000000 - 0)),
   categories: [],
+  selected_category: 0,
 };
 
 // Slice is a combination of reducers with action
@@ -22,7 +24,9 @@ export const appSlice = createSlice({
   reducers: {
     setCategory: (state, action: PayloadAction<never[]>) => {
       state.categories = action.payload;
-      console.log(state.categories);
+    },
+    setCategoryId: (state, action: PayloadAction<number>) => {
+      state.selected_category = action.payload;
     },
   },
 });
@@ -32,5 +36,6 @@ export const appActions = appSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectOrderId = (state: RootState) => state.app.order_id;
 export const selectCategory = (state: RootState) => state.app.categories;
+export const selectCategoryId = (state: RootState) => state.app.selected_category;
 // Export a part of reducers of slice
 export const appReducer = appSlice.reducer;
