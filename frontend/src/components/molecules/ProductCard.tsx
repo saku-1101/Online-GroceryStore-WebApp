@@ -1,13 +1,23 @@
+import { useState } from 'react';
 import { Product } from '../../core/models/Product.model';
 import DefaultButton from '../atoms/LinkToButton';
 import CountingButton from '../atoms/CountingButton';
 import OrderButton from '../atoms/OrderButton';
 import { useAppSelector } from '../../app/hooks';
-import { selectOrderId } from '../../features/counter/appSlice';
+import { selectOrderId } from '../../slices/counter/appSlice';
 
 export default function ProductCard(props: { product: Product; button: string; isCategory: boolean }) {
-  const order_id = useAppSelector(selectOrderId);
-  // amountの定義が親に必要
+  const order_id: number = useAppSelector(selectOrderId);
+  const [amount, setAmount] = useState(0);
+  function decreaseAmount() {
+    setAmount(amount - 1);
+  }
+  function increaseAmount() {
+    setAmount(amount + 1);
+  }
+  function clearAmount() {
+    setAmount(0);
+  }
   return (
     <>
       <div className="card card-compact w-full bg-base-100 shadow-xl p-0">
@@ -32,13 +42,17 @@ export default function ProductCard(props: { product: Product; button: string; i
               <DefaultButton label={props.button} uri={'/product/category/' + props.product.category} />
             ) : (
               <>
-                {/* (amount)親コンポーネントの値を子コンポーネントで変更してもらうようにしたいです */}
-                <CountingButton amount={0} />
+                <CountingButton
+                  increaseAmount={increaseAmount.bind(increaseAmount)}
+                  decreaseAmount={decreaseAmount.bind(increaseAmount)}
+                  amount={amount}
+                />
                 <OrderButton
                   label={props.button}
                   order_id={order_id}
                   product_id={props.product.product_id}
-                  quantity={4}
+                  quantity={amount}
+                  clearAmount={clearAmount.bind(clearAmount)}
                 />
               </>
             )}
