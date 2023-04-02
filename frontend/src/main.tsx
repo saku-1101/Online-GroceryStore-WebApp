@@ -9,7 +9,7 @@ import CategoryPage from './components/templates/CategoryPage';
 import ErrorPage from './error-page';
 import Dummy from './components/templates/Dummy';
 import ProductsPage from './components/templates/ProductsPage';
-import Counter from './features/counter/Counter';
+import SelectTheCategoryError from './components/templates/SelectTheCategoryError';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/category',
         element: <CategoryPage />,
+      },
+      {
+        path: '/product/category/0',
+        element: <SelectTheCategoryError />,
       },
       {
         path: '/product/category/:category',
