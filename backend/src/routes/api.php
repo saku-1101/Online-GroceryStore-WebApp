@@ -30,4 +30,6 @@ Route::get('/product/search', [ProductController::class, 'search']);
 Route::resource('product', 'App\Http\Controllers\ProductController');
 
 Route::post('/order/add', [OrderController::class, 'addOrder']);
+Route::delete('/order/delete/all', [OrderController::class, 'destroy']);
+Route::delete('/order/delete/{order_id}/{product_id}', [OrderController::class, 'deleteByProductId']);
 Route::resource('order', 'App\Http\Controllers\OrderController');

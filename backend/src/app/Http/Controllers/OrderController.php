@@ -87,6 +87,35 @@ class OrderController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+    /**
+     * Remove a product and update its corresponding orders and products in the database.
+     *
+     * @param  int  $order_id, $product_id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteByProductId($order_id, $product_id)
+    {
+        // Order_details テーブルから指定した order_id と product_id に一致するレコードを削除する
+        $deletedRows = Detail::where('order_id', $order_id)
+                                  ->where('product_id', $product_id)
+                                  ->get();
+                                  
+        foreach($deletedRows as $deletedRow){
+            $order = Order::find($deletedRow->order_id);
+            $order->total_amount = $order->total_amount - ($deletedRow->unit_price * $deletedRow->quantity);
+            $order->save();
+            
+            $product = Product::find($deletedRow->product_id);
+            $product->in_stock = $product->in_stock + $deletedRow->quantity;
+            $product->save();
+        }
+
+        $deletedRowsCount = Detail::where('product_id', $product_id)->delete();
+
+        return response()->json([
+            'message' => 'Deleted ' . $deletedRows . ' rows, and updated the total amount and in_stock fields'
+        ]);
+    }
 
     /**
      * Remove an order and its corresponding details from the database.
