@@ -29,28 +29,35 @@ class OrderController extends Controller
         $product = Product::findOrFail($product_id);
         $unitPrice = $product->unit_price;
         
+        // get the order detail record, or create a new one if it doesn't exist
+        $orderDetail = Detail::firstOrNew(['order_id' => $order_id, 'product_id' => $product_id]);
+        // save previous quantity to use it later
+        $previousQuantity = $orderDetail->quantity;
+
+        // update the order record with the new total amount and order date
+        $orderDetail->quantity = $quantity;
+        $orderDetail->unit_price = $unitPrice;
+
+        // save the order record
+        $orderDetail->save();
         
         // get the order record, or create a new one if it doesn't exist
         $order = Order::firstOrNew(['order_id' => $order_id]);
 
         // update the order record with the new total amount and order date
-        $order->total_amount += $unitPrice * $quantity;
+            // withdraw the product's previous total_amount
+        $order->total_amount -= $unitPrice * $previousQuantity;
+            // update the product's total_amount
+        $order->total_amount += $unitPrice * $orderDetail->quantity;
         $order->order_date = now();
 
         // save the order record
         $order->save();
-        
-        // get the order detail record, or create a new one if it doesn't exist
-        $orderDetail = Detail::firstOrNew(['order_id' => $order_id, 'product_id' => $product_id]);
-
-        // update the order record with the new total amount and order date
-        $orderDetail->quantity += $quantity;
-        $orderDetail->unit_price = $unitPrice;
-
-        // save the order record
-        $orderDetail->save();
 
         // Update the quantity of the product
+            // add the product's previous stock number
+        $product->in_stock += $previousQuantity;
+            // withdraw the product's stock number
         $product->in_stock -= $quantity;
         $product->save();
         
@@ -60,6 +67,7 @@ class OrderController extends Controller
             'total_amount' => $order->total_amount,
         ]);
     }
+
 
      
      /**
