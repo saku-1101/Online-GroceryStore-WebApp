@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useAppSelector } from '../../app/hooks';
 import { selectItems, selectTotal } from '../../slices/counter/appSlice';
+import { Link } from 'react-router-dom';
 
 export default function DraggableCart() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -47,7 +48,9 @@ export default function DraggableCart() {
             <span className="font-bold text-lg">{items} Items</span>
             <span className="text-info">Subtotal: ${subtotal}</span>
             <div className="card-actions">
-              <button className="btn btn-primary btn-block">View cart</button>
+              <Link to="/cart">
+                <button className="btn btn-primary btn-block">View cart</button>
+              </Link>
             </div>
           </div>
         </div>
