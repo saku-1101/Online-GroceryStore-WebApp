@@ -81,15 +81,15 @@ class OrderController extends Controller
                 if ($orderDetails->isEmpty()) {
                     throw new \Exception('No order details found for the given order ID');
                 }
-                // 注文商品情報を取得　// orderDetailsのproduct_idと一致するproductをProductデータベースから取り出したい．
+                // 注文商品情報を取得　// orderDetailsコレクションのproduct_idと一致するproductのコレクションをProductデータベースから取り出したい．
                 try {
-                    $products = Product::where('order_id', $order_id)->get();
-        
+                    $productIds = $orderDetails->pluck('product_id');
+                    $products = Product::whereIn('product_id', $productIds)->get();
+
                     return response()->json(['order' => $order, 'order_details' => $orderDetails, 'products' => $products], 200);
                 } catch (\Exception $e) {
                     return response()->json(['message' => $e->getMessage()], 400);
                 }
-                return response()->json(['order' => $order, 'order_details' => $orderDetails, 'products' => $products], 200);
             } catch (\Exception $e) {
                 return response()->json(['message' => $e->getMessage()], 400);
             }
