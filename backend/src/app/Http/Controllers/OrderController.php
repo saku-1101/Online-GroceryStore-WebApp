@@ -61,6 +61,7 @@ class OrderController extends Controller
         ]);
     }
 
+     
      /**
      * Display the specified order.
      *
@@ -80,8 +81,15 @@ class OrderController extends Controller
                 if ($orderDetails->isEmpty()) {
                     throw new \Exception('No order details found for the given order ID');
                 }
-    
-                return response()->json(['order' => $order, 'order_details' => $orderDetails], 200);
+                // 注文商品情報を取得　// orderDetailsのproduct_idと一致するproductをProductデータベースから取り出したい．
+                try {
+                    $products = Product::where('order_id', $order_id)->get();
+        
+                    return response()->json(['order' => $order, 'order_details' => $orderDetails, 'products' => $products], 200);
+                } catch (\Exception $e) {
+                    return response()->json(['message' => $e->getMessage()], 400);
+                }
+                return response()->json(['order' => $order, 'order_details' => $orderDetails, 'products' => $products], 200);
             } catch (\Exception $e) {
                 return response()->json(['message' => $e->getMessage()], 400);
             }
@@ -98,24 +106,22 @@ class OrderController extends Controller
     public function deleteByProductId($order_id, $product_id)
     {
         // Order_details テーブルから指定した order_id と product_id に一致するレコードを削除する
-        $deletedRows = Detail::where('order_id', $order_id)
+        $deletedRow = Detail::where('order_id', $order_id)
                                   ->where('product_id', $product_id)
-                                  ->get();
+                                  ->first();
                                   
-        foreach($deletedRows as $deletedRow){
-            $order = Order::find($deletedRow->order_id);
-            $order->total_amount = $order->total_amount - ($deletedRow->unit_price * $deletedRow->quantity);
-            $order->save();
-            
-            $product = Product::find($deletedRow->product_id);
-            $product->in_stock = $product->in_stock + $deletedRow->quantity;
-            $product->save();
-        }
+        $order = Order::find($deletedRow->order_id);
+        $order->total_amount = $order->total_amount - ($deletedRow->unit_price * $deletedRow->quantity);
+        $order->save();
+        
+        $product = Product::find($deletedRow->product_id);
+        $product->in_stock = $product->in_stock + $deletedRow->quantity;
+        $product->save();
 
-        $deletedRowsCount = Detail::where('product_id', $product_id)->delete();
+        $deletedRowsCount = Detail::where('order_id', $order_id)->where('product_id', $product_id)->delete();
 
         return response()->json([
-            'message' => 'Deleted ' . $deletedRows . ' rows, and updated the total amount and in_stock fields'
+            'message' => 'Deleted ' . $deletedRow . ' rows, and updated the total amount and in_stock fields'
         ]);
     }
 
