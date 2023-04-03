@@ -61,3 +61,10 @@ export function checkOut(name: string, email: string, orderId: string) {
     .then(responseBody)
     .catch((error) => console.log(error));
 }
+
+export function showOrder(orderId: string) {
+  return instance
+    .get('/order' + orderId)
+    .then(responseBody)
+    .catch((error) => console.log(error));
+}
