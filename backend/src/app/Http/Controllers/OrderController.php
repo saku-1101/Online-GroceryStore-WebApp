@@ -19,7 +19,6 @@ class OrderController extends Controller
      */
     public function addOrder(Request $request)
     {
-        
         // get unique order id, product id and quantity from the request
         $order_id = $request->input('order_id');
         $product_id = $request->input('product_id');
@@ -28,7 +27,18 @@ class OrderController extends Controller
         // get the product price
         $product = Product::findOrFail($product_id);
         $unitPrice = $product->unit_price;
-        
+
+        // get the order record, or create a new one if it doesn't exist
+        $order = Order::firstOrNew(['order_id' => $order_id]);
+
+        // update the order record with the new total amount and order date
+            // update the product's total_amount
+        $order->total_amount += $unitPrice * $quantity;
+        $order->order_date = now();
+
+        // save the order record
+        $order->save();
+
         // get the order detail record, or create a new one if it doesn't exist
         $orderDetail = Detail::firstOrNew(['order_id' => $order_id, 'product_id' => $product_id]);
         // save previous quantity to use it later
@@ -40,18 +50,11 @@ class OrderController extends Controller
 
         // save the order record
         $orderDetail->save();
-        
-        // get the order record, or create a new one if it doesn't exist
-        $order = Order::firstOrNew(['order_id' => $order_id]);
-
-        // update the order record with the new total amount and order date
-            // withdraw the product's previous total_amount
+         
+        $order = Order::where('order_id', $order_id)->first();
+        // withdraw the product's previous total_amount
         $order->total_amount -= $unitPrice * $previousQuantity;
-            // update the product's total_amount
-        $order->total_amount += $unitPrice * $orderDetail->quantity;
-        $order->order_date = now();
-
-        // save the order record
+         // save the order record
         $order->save();
 
         // Update the quantity of the product
@@ -60,7 +63,6 @@ class OrderController extends Controller
             // withdraw the product's stock number
         $product->in_stock -= $quantity;
         $product->save();
-        
         return response()->json([
             'message' => 'Product added to order.',
             'order_id' => $order->order_id,
