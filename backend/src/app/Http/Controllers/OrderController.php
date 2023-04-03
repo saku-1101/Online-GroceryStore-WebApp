@@ -39,14 +39,16 @@ class OrderController extends Controller
 
         // save the order record
         $order->save();
+        
+        // get the order detail record, or create a new one if it doesn't exist
+        $orderDetail = Detail::firstOrNew(['order_id' => $order_id, 'product_id' => $product_id]);
 
-        // create a new order detail record
-        $orderDetail = Detail::create([
-            'order_id' => $order->order_id,
-            'product_id' => $product_id,
-            'unit_price' => $unitPrice,
-            'quantity' => $quantity,
-        ]);
+        // update the order record with the new total amount and order date
+        $orderDetail->quantity += $quantity;
+        $orderDetail->unit_price = $unitPrice;
+
+        // save the order record
+        $orderDetail->save();
 
         // Update the quantity of the product
         $product->in_stock -= $quantity;
