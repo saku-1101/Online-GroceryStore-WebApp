@@ -1,3 +1,4 @@
+import { Product } from '../../core/models/Product.model';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductCard from '../molecules/ProductCard';
@@ -20,19 +21,8 @@ export default function CategoryPage() {
       <PageTitle title="Products" />
       <div className="flex justify-center">
         <div className="w-3/4 grid grid-cols-3 gap-10">
-          {products.map((product) => (
-            <ProductCard
-              key={product.product_id}
-              imgUrl="src/assets/bread.jpg"
-              imgAlt={product.url}
-              category={product.category}
-              name={product.product_name}
-              tag=""
-              description=""
-              button="ADD ALL"
-              uri="/"
-              isCategory={false}
-            />
+          {products.map((product: Product) => (
+            <ProductCard key={product.product_id} product={product} button="ADD ALL" isCategory={false} />
           ))}
         </div>
       </div>

@@ -1,4 +1,10 @@
+import { useEffect } from 'react';
+import { useAppSelector } from '../../app/hooks';
+import { selectCategory } from '../../slices/appSlice';
+import { Product } from '../../core/models/Product.model';
+import { Link } from 'react-router-dom';
 export default function NavMenu() {
+  const categories = useAppSelector(selectCategory);
   return (
     <>
       <div className="dropdown">
@@ -14,15 +20,11 @@ export default function NavMenu() {
           </svg>
         </label>
         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-          <li>
-            <a>Homepage</a>
-          </li>
-          <li>
-            <a>Portfolio</a>
-          </li>
-          <li>
-            <a>About</a>
-          </li>
+          {categories.map((category: Product) => (
+            <Link to={'/product/category/' + category.category} key={category.category}>
+              <li>{category.category}</li>
+            </Link>
+          ))}
         </ul>
       </div>
     </>

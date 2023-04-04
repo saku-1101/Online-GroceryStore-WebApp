@@ -29,7 +29,7 @@ export function getProductsByCategory(category: string | undefined) {
     });
 }
 
-export function search(text: string) {
+export function search(text: FormDataEntryValue) {
   return instance
     .get('product/search?query=' + text)
     .then(responseBody)
@@ -64,7 +64,7 @@ export function checkOut(name: string, email: string, orderId: string) {
 
 export function showOrder(orderId: string) {
   return instance
-    .get('/order/' + orderId)
+    .get('/order' + orderId)
     .then(responseBody)
     .catch((error) => console.log(error));
 }

@@ -9,3 +9,5 @@ ENV MYSQL_DATABASE=laravel \
 COPY ./my.cnf /etc/my.cnf
 
 RUN chmod 644 /etc/my.cnf
+
+# mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE　にてログイン

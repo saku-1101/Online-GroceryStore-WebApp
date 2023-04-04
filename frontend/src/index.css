@@ -18,6 +18,14 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.breadcrumb-not-active {
+  color: #cccccc;
+}
+
+.breadcrumb-active {
+  color: #213547;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
