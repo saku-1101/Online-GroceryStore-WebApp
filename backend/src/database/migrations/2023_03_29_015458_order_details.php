@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id('detail_id');
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
-            $table->decimal('unit_price', 10, 2);
-            $table->integer('quantity');
+            $table->float('unit_price', 8, 2)->nullable();
+            $table->string('quantity', 15)->nullable();
             $table->timestamps();
-    
+
             $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
         });
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        // Schema::dropIfExists('order_details');
     }
 };
