@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import type { RootState } from '../src/app/store';
 
 // type for the slice state
 interface AppState {
@@ -9,6 +9,7 @@ interface AppState {
   categories: [];
   selected_category: number;
   search_results: [];
+  order_details: [];
 }
 
 // initial state definition
@@ -19,6 +20,7 @@ const initialState: AppState = {
   categories: [],
   selected_category: 0,
   search_results: [],
+  order_details: [],
 };
 
 // Slice is a combination of reducers with action
@@ -43,6 +45,9 @@ export const appSlice = createSlice({
     setTotal: (state, action: PayloadAction<number>) => {
       state.subtotal += action.payload;
     },
+    setDetails: (state, action: PayloadAction<[]>) => {
+      state.order_details = action.payload;
+    },
   },
 });
 
@@ -55,5 +60,6 @@ export const selectCategoryId = (state: RootState) => state.app.selected_categor
 export const selectSearchResult = (state: RootState) => state.app.search_results;
 export const selectItems = (state: RootState) => state.app.items;
 export const selectTotal = (state: RootState) => state.app.subtotal;
+export const selectOrderDetails = (state: RootState) => state.app.order_details;
 // Export a part of reducers of slice
 export const appReducer = appSlice.reducer;
