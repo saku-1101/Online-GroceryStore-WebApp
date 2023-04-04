@@ -8,9 +8,17 @@ import { selectOrderId } from '../../slices/appSlice';
 
 export default function Order() {
   const [form, setState] = useState({ name: '', post: '', suburb: '', state: '', country: '', email: '' });
+  const [message, setError] = useState('');
+  function isValidEmail(email: string) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
   const handleSetState = (input: string) => (e: any) => {
-    setState({ ...form, [input]: e.target.value });
-    console.log(form);
+    if (isValidEmail(e.target.value)) {
+      setState({ ...form, [input]: e.target.value });
+      setError('');
+    } else {
+      setError('Invalid Email address');
+    }
   };
   const orderId = useAppSelector(selectOrderId);
 
@@ -85,7 +93,7 @@ export default function Order() {
         <div className="form-control w-full max-w-md">
           <label className="label">
             <span className="label-text">Email</span>
-            <span className="label-text-alt text-error">*</span>
+            <span className="label-text-alt text-error">* {message}</span>
           </label>
           <input
             type="text"
