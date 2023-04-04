@@ -2,7 +2,7 @@ import { Product } from '../../core/models/Product.model';
 import ProductCard from '../molecules/ProductCard';
 import PageTitle from '../atoms/PageTitle';
 import { useAppSelector } from '../../app/hooks';
-import { selectCategory } from '../../slices/counter/appSlice';
+import { selectCategory } from '../../slices/appSlice';
 
 export default function CategoryPage() {
   const categories = useAppSelector(selectCategory);

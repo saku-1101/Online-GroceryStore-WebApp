@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppSelector } from '../../app/hooks';
-import { selectCategory } from '../../slices/counter/appSlice';
+import { selectCategory } from '../../slices/appSlice';
 import { Product } from '../../core/models/Product.model';
 import { Link } from 'react-router-dom';
 export default function NavMenu() {

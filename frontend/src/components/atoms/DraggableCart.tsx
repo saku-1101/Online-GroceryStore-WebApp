@@ -1,12 +1,20 @@
 import { useState, useRef } from 'react';
 import Draggable from 'react-draggable';
-import { useAppSelector } from '../../app/hooks';
-import { selectItems, selectTotal } from '../../slices/counter/appSlice';
-import { Link } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectItems, selectTotal, selectOrderId, appActions } from '../../slices/appSlice';
+import { useNavigate } from 'react-router-dom';
+import { showOrder } from '../../core/infrastructures/AppApi';
+import { OrderedProduct } from '../../core/models/OrderedProduct.model';
 
 export default function DraggableCart() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const buttonRef = useRef(null);
+  const orderId = useAppSelector(selectOrderId);
+  const items = useAppSelector(selectItems);
+  const subtotal = useAppSelector(selectTotal);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const handleDrag = (e: any, ui: any) => {
     const { x, y } = ui;
     setPosition({
@@ -14,9 +22,19 @@ export default function DraggableCart() {
       y: y,
     });
   };
+  const handleNavigate = async () => {
+    const res = await showOrder(orderId.toString());
+    if (res.order_details.length === res.products.length) {
+      const newOrderList: Array<OrderedProduct> = [];
+      for (let i = 0; i < res.order_details.length; i++) {
+        newOrderList.push({ product: res.products[i], order_detail: res.order_details[i] });
+      }
+      // register to the global variable
+      dispatch(appActions.setOrderDetails(newOrderList));
+    }
 
-  const items = useAppSelector(selectItems);
-  const subtotal = useAppSelector(selectTotal);
+    navigate('/cart');
+  };
 
   return (
     <Draggable onDrag={handleDrag} position={position} nodeRef={buttonRef}>
@@ -48,9 +66,11 @@ export default function DraggableCart() {
             <span className="font-bold text-lg">{items} Items</span>
             <span className="text-info">Subtotal: ${subtotal}</span>
             <div className="card-actions">
-              <Link to="/cart">
-                <button className="btn btn-primary btn-block">View cart</button>
-              </Link>
+              {/* <Link to="/cart"> */}
+              <button className="btn btn-primary btn-block" onClick={handleNavigate}>
+                View cart
+              </button>
+              {/* </Link> */}
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import { appActions } from '../../slices/counter/appSlice';
+import { appActions } from '../../slices/appSlice';
 
 export default function LinkToButton(props: { label: string; category_id: number }) {
   const dispatch = useAppDispatch();

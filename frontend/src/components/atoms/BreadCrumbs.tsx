@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { selectCategoryId } from '../../slices/counter/appSlice';
+import { selectCategoryId } from '../../slices/appSlice';
 export default function BreadCrumbs() {
   const location = useLocation();
   const selected_category: number = useAppSelector(selectCategoryId);

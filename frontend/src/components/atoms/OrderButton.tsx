@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addOrder } from '../../core/infrastructures/AppApi';
-import { appActions } from '../../slices/counter/appSlice';
+import { appActions } from '../../slices/appSlice';
 
 export default function OrderButton(props: {
   label: string;
@@ -8,16 +8,14 @@ export default function OrderButton(props: {
   product_id: number;
   quantity: number;
   price: number;
-  clearAmount: any;
 }) {
   const dispatch = useAppDispatch();
 
   async function addOrderHandler() {
-    dispatch(appActions.setItems(props.quantity));
-    dispatch(appActions.setTotal(props.quantity * props.price));
+    dispatch(appActions.setItems({ product_id: props.product_id, product_quantity: props.quantity }));
+    dispatch(appActions.setTotal({ product_id: props.product_id, product_subtotal: props.price * props.quantity }));
     const res = await addOrder(props.order_id.toString(), props.product_id.toString(), props.quantity.toString());
     console.log(res);
-    props.clearAmount();
   }
   return (
     <>

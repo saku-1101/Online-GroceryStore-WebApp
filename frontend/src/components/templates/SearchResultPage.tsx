@@ -2,7 +2,7 @@ import { Product } from '../../core/models/Product.model';
 import ProductCard from '../molecules/ProductCard';
 import PageTitle from '../atoms/PageTitle';
 import { useAppSelector } from '../../app/hooks';
-import { selectSearchResult } from '../../slices/counter/appSlice';
+import { selectSearchResult } from '../../slices/appSlice';
 
 export default function SearchResultPage() {
   const results = useAppSelector(selectSearchResult);

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { search } from '../../core/infrastructures/AppApi';
-import { appActions, selectSearchResult } from '../../slices/counter/appSlice';
+import { appActions, selectSearchResult } from '../../slices/appSlice';
 export default function SearchBox() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

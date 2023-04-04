@@ -5,7 +5,7 @@ import DraggableCart from '../components/atoms/DraggableCart';
 import Footer from '../components/atoms/Footer';
 import { getCategories } from '../core/infrastructures/AppApi';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { selectCategory, appActions } from '../../slices/appSlice';
+import { selectCategory, appActions } from '../slices/appSlice';
 
 export default function Root() {
   const dispatch = useAppDispatch();

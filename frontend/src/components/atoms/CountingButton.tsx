@@ -1,5 +1,4 @@
 export default function CountingButton(props: { amount: number; increaseAmount: any; decreaseAmount: any }) {
-  // const [amount, setAmount] = useState(props.amount);
   return (
     <>
       <div className="btn-group grid grid-cols-3">
