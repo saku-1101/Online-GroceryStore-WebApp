@@ -29,7 +29,7 @@ export function getProductsByCategory(category: string | undefined) {
     });
 }
 
-export function search(text: string) {
+export function search(text: FormDataEntryValue) {
   return instance
     .get('product/search?query=' + text)
     .then(responseBody)
@@ -49,4 +49,22 @@ export function addOrder(order_id: string, product_id: string, quantity: string)
     .catch((error) => {
       console.log(error);
     });
+}
+
+export function checkOut(name: string, email: string, orderId: string) {
+  return instance
+    .post('/checkout', {
+      name: name,
+      email: email,
+      orderId: orderId,
+    })
+    .then(responseBody)
+    .catch((error) => console.log(error));
+}
+
+export function showOrder(orderId: string) {
+  return instance
+    .get('/order' + orderId)
+    .then(responseBody)
+    .catch((error) => console.log(error));
 }

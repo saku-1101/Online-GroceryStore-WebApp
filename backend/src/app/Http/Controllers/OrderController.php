@@ -19,7 +19,6 @@ class OrderController extends Controller
      */
     public function addOrder(Request $request)
     {
-        
         // get unique order id, product id and quantity from the request
         $order_id = $request->input('order_id');
         $product_id = $request->input('product_id');
@@ -28,27 +27,42 @@ class OrderController extends Controller
         // get the product price
         $product = Product::findOrFail($product_id);
         $unitPrice = $product->unit_price;
-        
-        
+
         // get the order record, or create a new one if it doesn't exist
         $order = Order::firstOrNew(['order_id' => $order_id]);
 
         // update the order record with the new total amount and order date
+            // update the product's total_amount
         $order->total_amount += $unitPrice * $quantity;
         $order->order_date = now();
 
         // save the order record
         $order->save();
 
-        // create a new order detail record
-        $orderDetail = Detail::create([
-            'order_id' => $order->order_id,
-            'product_id' => $product_id,
-            'unit_price' => $unitPrice,
-            'quantity' => $quantity,
-        ]);
-        
-        
+        // get the order detail record, or create a new one if it doesn't exist
+        $orderDetail = Detail::firstOrNew(['order_id' => $order_id, 'product_id' => $product_id]);
+        // save previous quantity to use it later
+        $previousQuantity = $orderDetail->quantity;
+
+        // update the order record with the new total amount and order date
+        $orderDetail->quantity = $quantity;
+        $orderDetail->unit_price = $unitPrice;
+
+        // save the order record
+        $orderDetail->save();
+         
+        $order = Order::where('order_id', $order_id)->first();
+        // withdraw the product's previous total_amount
+        $order->total_amount -= $unitPrice * $previousQuantity;
+         // save the order record
+        $order->save();
+
+        // Update the quantity of the product
+            // add the product's previous stock number
+        $product->in_stock += $previousQuantity;
+            // withdraw the product's stock number
+        $product->in_stock -= $quantity;
+        $product->save();
         return response()->json([
             'message' => 'Product added to order.',
             'order_id' => $order->order_id,
@@ -56,6 +70,8 @@ class OrderController extends Controller
         ]);
     }
 
+
+     
      /**
      * Display the specified order.
      *
@@ -75,14 +91,48 @@ class OrderController extends Controller
                 if ($orderDetails->isEmpty()) {
                     throw new \Exception('No order details found for the given order ID');
                 }
-    
-                return response()->json(['order' => $order, 'order_details' => $orderDetails], 200);
+                // 注文商品情報を取得　// orderDetailsコレクションのproduct_idと一致するproductのコレクションをProductデータベースから取り出したい．
+                try {
+                    $productIds = $orderDetails->pluck('product_id');
+                    $products = Product::whereIn('product_id', $productIds)->get();
+
+                    return response()->json(['order' => $order, 'order_details' => $orderDetails, 'products' => $products], 200);
+                } catch (\Exception $e) {
+                    return response()->json(['message' => $e->getMessage()], 400);
+                }
             } catch (\Exception $e) {
                 return response()->json(['message' => $e->getMessage()], 400);
             }
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+    /**
+     * Remove a product and update its corresponding orders and products in the database.
+     *
+     * @param  int  $order_id, $product_id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteByProductId($order_id, $product_id)
+    {
+        // Order_details テーブルから指定した order_id と product_id に一致するレコードを削除する
+        $deletedRow = Detail::where('order_id', $order_id)
+                                  ->where('product_id', $product_id)
+                                  ->first();
+                                  
+        $order = Order::find($deletedRow->order_id);
+        $order->total_amount = $order->total_amount - ($deletedRow->unit_price * $deletedRow->quantity);
+        $order->save();
+        
+        $product = Product::find($deletedRow->product_id);
+        $product->in_stock = $product->in_stock + $deletedRow->quantity;
+        $product->save();
+
+        $deletedRowsCount = Detail::where('order_id', $order_id)->where('product_id', $product_id)->delete();
+
+        return response()->json([
+            'message' => 'Deleted ' . $deletedRow . ' rows, and updated the total amount and in_stock fields'
+        ]);
     }
 
     /**
