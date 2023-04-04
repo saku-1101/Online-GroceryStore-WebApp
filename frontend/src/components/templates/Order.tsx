@@ -9,6 +9,9 @@ import { selectOrderId } from '../../slices/appSlice';
 export default function Order() {
   const [form, setState] = useState({ name: '', post: '', suburb: '', state: '', country: '', email: '' });
   const [message, setError] = useState('');
+  const [caution, removeCaution] = useState(
+    <p className="text-sm text-error text-left">Please provide us with all the essential information.</p>,
+  );
   function isValidEmail(email: string) {
     return /\S+@\S+\.\S+/.test(email);
   }
@@ -16,11 +19,23 @@ export default function Order() {
     if (isValidEmail(e.target.value)) {
       setState({ ...form, [input]: e.target.value });
       setError('');
+      console.log(form.name);
+      if (
+        form.name !== '' &&
+        form.post !== '' &&
+        form.suburb !== '' &&
+        form.state !== '' &&
+        form.country !== '' &&
+        form.email !== ''
+      ) {
+        console.log('here');
+        removeCaution(<span></span>);
+      }
     } else {
       setError('Invalid Email address');
     }
   };
-  const orderId = useAppSelector(selectOrderId);
+  const orderId: number = useAppSelector(selectOrderId);
 
   return (
     <>
@@ -102,6 +117,8 @@ export default function Order() {
             className="input input-bordered w-full max-w-md"
           />
         </div>
+        {caution}
+
         <div className="w-full flex flex-row justify-center gap-10">
           <OrderDetails />
           <button className="btn btn-secondary" onClick={() => checkOut(form.name, form.email, orderId.toString())}>

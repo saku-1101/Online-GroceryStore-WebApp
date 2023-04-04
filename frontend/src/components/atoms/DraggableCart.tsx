@@ -32,6 +32,7 @@ export default function DraggableCart() {
       // register to the global variable
       dispatch(appActions.setOrderDetails(newOrderList));
     }
+    console.log('here');
 
     navigate('/cart');
   };
@@ -66,11 +67,9 @@ export default function DraggableCart() {
             <span className="font-bold text-lg">{items} Items</span>
             <span className="text-info">Subtotal: ${subtotal}</span>
             <div className="card-actions">
-              {/* <Link to="/cart"> */}
               <button className="btn btn-primary btn-block" onClick={handleNavigate}>
                 View cart
               </button>
-              {/* </Link> */}
             </div>
           </div>
         </div>
