@@ -5,7 +5,7 @@ import DraggableCart from '../components/atoms/DraggableCart';
 import Footer from '../components/atoms/Footer';
 import { getCategories } from '../core/infrastructures/AppApi';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { selectCategory, appActions } from '../slices/counter/appSlice';
+import { selectCategory, appActions } from '../../slices/appSlice';
 
 export default function Root() {
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export default function Root() {
     setData();
   }, [categories]);
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col justify-between h-screen">
       <NavBar />
       <div id="content" className="w-screen relative">
         <Outlet />
