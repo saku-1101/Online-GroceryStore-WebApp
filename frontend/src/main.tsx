@@ -11,6 +11,8 @@ import Dummy from './components/templates/Dummy';
 import ProductsPage from './components/templates/ProductsPage';
 import SearchResultPage from './components/templates/SearchResultPage';
 import SelectTheCategoryError from './components/templates/SelectTheCategoryError';
+import Order from './components/templates/Order';
+import Cart from './components/templates/Cart';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: '/search/result',
         element: <SearchResultPage />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
+      },
+      {
+        path: '/order',
+        element: <Order />,
       },
       {
         path: '/dummy',
