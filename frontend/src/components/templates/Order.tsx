@@ -1,4 +1,4 @@
-import PageTitile from '../atoms/PageTitle';
+import PageTitle from '../atoms/PageTitle';
 import OrderDetails from '../atoms/OrderDetails';
 import { Link } from 'react-router-dom';
 import { checkOut } from '../../core/infrastructures/AppApi';
@@ -9,30 +9,24 @@ import { selectOrderId } from '../../slices/appSlice';
 export default function Order() {
   const [form, setState] = useState({ name: '', post: '', suburb: '', state: '', country: '', email: '' });
   const [message, setError] = useState('');
-  const [caution, removeCaution] = useState(
-    <p className="text-sm text-error text-left">Please provide us with all the essential information.</p>,
-  );
+
+  // email validation
   function isValidEmail(email: string) {
     return /\S+@\S+\.\S+/.test(email);
   }
   const handleSetState = (input: string) => (e: any) => {
-    if (isValidEmail(e.target.value)) {
-      setState({ ...form, [input]: e.target.value });
-      setError('');
-      console.log(form.name);
-      if (
-        form.name !== '' &&
-        form.post !== '' &&
-        form.suburb !== '' &&
-        form.state !== '' &&
-        form.country !== '' &&
-        form.email !== ''
-      ) {
-        console.log('here');
-        removeCaution(<span></span>);
+    if (input === 'email') {
+      if (isValidEmail(e.target.value)) {
+        // hooksで更新される値は即座更新されるわけではない.
+        // Hooksの発火->他のJS処理(->Hooksの処理)->レンダリングの順で処理が進む
+        // 従って，Hooks処理の結果を用いた処理をJS内ですると，更新された値を使用して処理ができない！！（レンダリングには更新された値が反映される）
+        setState({ ...form, [input]: e.target.value });
+        setError('');
+      } else {
+        setError('Invalid Email address');
       }
     } else {
-      setError('Invalid Email address');
+      setState({ ...form, [input]: e.target.value });
     }
   };
   const orderId: number = useAppSelector(selectOrderId);
@@ -40,7 +34,7 @@ export default function Order() {
   return (
     <>
       <div className="w-screen h-screen flex flex-col items-center justify-center gap-6">
-        <PageTitile title="Place the Order" />
+        <PageTitle title="Place the Order" />
         <div className="form-control w-full max-w-md align-middle">
           <label className="label">
             <span className="label-text">Name</span>
@@ -117,11 +111,33 @@ export default function Order() {
             className="input input-bordered w-full max-w-md"
           />
         </div>
-        {caution}
+        {form.name != '' &&
+        form.post != '' &&
+        form.suburb != '' &&
+        form.state != '' &&
+        form.country != '' &&
+        form.email != '' ? (
+          ''
+        ) : (
+          <p className="text-sm text-error text-left">Please provide us with all the essential information.</p>
+        )}
 
         <div className="w-full flex flex-row justify-center gap-10">
           <OrderDetails />
-          <button className="btn btn-secondary" onClick={() => checkOut(form.name, form.email, orderId.toString())}>
+          <button
+            disabled={
+              form.name != '' &&
+              form.post != '' &&
+              form.suburb != '' &&
+              form.state != '' &&
+              form.country != '' &&
+              form.email != ''
+                ? false
+                : true
+            }
+            className="btn btn-secondary"
+            onClick={() => checkOut(form.name, form.email, orderId.toString())}
+          >
             Checkout
           </button>
         </div>
