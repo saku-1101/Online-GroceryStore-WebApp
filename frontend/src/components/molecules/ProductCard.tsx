@@ -4,10 +4,11 @@ import DefaultButton from '../atoms/LinkToButton';
 import CountingButton from '../atoms/CountingButton';
 import OrderButton from '../atoms/OrderButton';
 import { useAppSelector } from '../../app/hooks';
-import { selectOrderId } from '../../slices/counter/appSlice';
+import { selectOrderId, selectOrderDetails } from '../../slices/appSlice';
 
 export default function ProductCard(props: { product: Product; button: string; isCategory: boolean }) {
   const order_id: number = useAppSelector(selectOrderId);
+
   const [amount, setAmount] = useState(0);
   function decreaseAmount() {
     setAmount(amount - 1);
@@ -15,9 +16,7 @@ export default function ProductCard(props: { product: Product; button: string; i
   function increaseAmount() {
     setAmount(amount + 1);
   }
-  function clearAmount() {
-    setAmount(0);
-  }
+
   return (
     <>
       <div className="card card-compact w-full bg-base-100 shadow-xl p-0">
@@ -53,7 +52,6 @@ export default function ProductCard(props: { product: Product; button: string; i
                   product_id={props.product.product_id}
                   quantity={amount}
                   price={props.product.unit_price}
-                  clearAmount={clearAmount.bind(clearAmount)}
                 />
               </>
             )}
