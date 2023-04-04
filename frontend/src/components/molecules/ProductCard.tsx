@@ -34,8 +34,13 @@ export default function ProductCard(props: { product: Product; button: string; i
           ) : (
             <div className="badge badge-secondary">{props.product.in_stock ? 'InStock' : 'OutOfStock'}</div>
           )}
-          {props.isCategory ? '' : <p className="text-neutral justify-start">Product description comes here.</p>}
-          {/* <p className="text-neutral justify-start">{props.description}</p> */}
+          {props.isCategory ? (
+            ''
+          ) : (
+            <p className="text-base-content justify-start">
+              $ {props.product.unit_price} {props.product.unit_quantity}
+            </p>
+          )}
           <div className="card-actions justify-end">
             {props.isCategory ? (
               <DefaultButton label={props.button} category_id={props.product.category} />

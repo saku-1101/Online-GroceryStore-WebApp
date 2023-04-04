@@ -3,7 +3,7 @@ import { OrderedProduct } from '../../core/models/OrderedProduct.model';
 import CountingButton from '../atoms/CountingButton';
 import OrderButton from '../atoms/OrderButton';
 import { useAppSelector } from '../../app/hooks';
-import { selectOrderId, selectOrderDetails } from '../../slices/appSlice';
+import { selectOrderId } from '../../slices/appSlice';
 
 export default function ProductCard(props: { order: OrderedProduct }) {
   const order_id: number = useAppSelector(selectOrderId);
@@ -25,7 +25,9 @@ export default function ProductCard(props: { order: OrderedProduct }) {
         <div className="card-body">
           <h2 className="card-title text-neutral-focus">{props.order.product.product_name}</h2>
           <div className="badge badge-secondary">{props.order.product.in_stock ? 'InStock' : 'OutOfStock'}</div>
-          <p className="text-neutral justify-start">{props.order.product.unit_price}</p>
+          <p className="text-base-content justify-start">
+            $ {props.order.product.unit_price} {props.order.product.unit_quantity}
+          </p>
           <div className="card-actions justify-end">
             <>
               <CountingButton
