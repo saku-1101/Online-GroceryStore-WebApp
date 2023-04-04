@@ -14,7 +14,7 @@ services:
     volumes:
       - ./backend/src:/data
     ports:
-      - :9000 # this container is only reachable internally by other containers through the port 9000
+      - 9000:9000 # this container is only reachable internally by other containers through the port 9000
     depends_on:
       - db
   db:

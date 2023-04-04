@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
-            $table->integer('total_amount') -> default('0');
-            $table->dateTime('order_date')->useCurrent()->useCurrentOnUpdate();;
+            $table->float('total_amount', 8, 2)->default(0);
+            $table->dateTime('order_date')->default(now())->useCurrentOnUpdate();
             $table->timestamps();
         });
     }

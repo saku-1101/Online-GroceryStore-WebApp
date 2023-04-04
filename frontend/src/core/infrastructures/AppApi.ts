@@ -50,3 +50,21 @@ export function addOrder(order_id: string, product_id: string, quantity: string)
       console.log(error);
     });
 }
+
+export function checkOut(name: string, email: string, orderId: string) {
+  return instance
+    .post('/checkout', {
+      name: name,
+      email: email,
+      orderId: orderId,
+    })
+    .then(responseBody)
+    .catch((error) => console.log(error));
+}
+
+export function showOrder(orderId: string) {
+  return instance
+    .get('/order/' + orderId)
+    .then(responseBody)
+    .catch((error) => console.log(error));
+}
