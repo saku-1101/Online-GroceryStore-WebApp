@@ -8,18 +8,18 @@ import { selectOrderId } from '../../slices/appSlice';
 
 export default function ProductCard(props: { product: Product; button: string; isCategory: boolean }) {
   const order_id: number = useAppSelector(selectOrderId);
-
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number>(0);
   function decreaseAmount() {
-    const new_amount = amount - 1;
+    const new_amount = Number(amount) - 1;
     if (new_amount >= 0) {
       setAmount(new_amount);
     }
   }
   function increaseAmount() {
-    const new_amount = amount + 1;
+    // stringとして加算されるのてキャスト
+    const new_amount = Number(amount) + 1;
     if (new_amount <= props.product.in_stock) {
-      setAmount(amount + 1);
+      setAmount(new_amount);
     }
   }
 
