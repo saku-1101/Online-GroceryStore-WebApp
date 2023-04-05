@@ -4,17 +4,23 @@ import DefaultButton from '../atoms/LinkToButton';
 import CountingButton from '../atoms/CountingButton';
 import OrderButton from '../atoms/OrderButton';
 import { useAppSelector } from '../../app/hooks';
-import { selectOrderId, selectOrderDetails } from '../../slices/appSlice';
+import { selectOrderId } from '../../slices/appSlice';
 
 export default function ProductCard(props: { product: Product; button: string; isCategory: boolean }) {
   const order_id: number = useAppSelector(selectOrderId);
 
   const [amount, setAmount] = useState(0);
   function decreaseAmount() {
-    setAmount(amount - 1);
+    const new_amount = amount - 1;
+    if (new_amount >= 0) {
+      setAmount(new_amount);
+    }
   }
   function increaseAmount() {
-    setAmount(amount + 1);
+    const new_amount = amount + 1;
+    if (new_amount <= props.product.in_stock) {
+      setAmount(amount + 1);
+    }
   }
 
   return (
@@ -32,7 +38,9 @@ export default function ProductCard(props: { product: Product; button: string; i
           {props.isCategory ? (
             ''
           ) : (
-            <div className="badge badge-secondary">{props.product.in_stock ? 'InStock' : 'OutOfStock'}</div>
+            <div className="badge badge-secondary">
+              {props.product.in_stock - amount > 0 ? 'InStock' : 'OutOfStock'}
+            </div>
           )}
           {props.isCategory ? (
             ''
@@ -57,6 +65,7 @@ export default function ProductCard(props: { product: Product; button: string; i
                   product_id={props.product.product_id}
                   quantity={amount}
                   price={props.product.unit_price}
+                  in_stock={props.product.in_stock - amount > 0}
                 />
               </>
             )}

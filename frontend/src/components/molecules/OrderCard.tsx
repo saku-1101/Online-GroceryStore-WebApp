@@ -10,7 +10,10 @@ export default function ProductCard(props: { order: OrderedProduct }) {
 
   const [amount, setAmount] = useState(props.order.order_detail.quantity);
   function decreaseAmount() {
-    setAmount(amount - 1);
+    const new_amount = amount - 1;
+    if (new_amount >= 0) {
+      setAmount(new_amount);
+    }
   }
   function increaseAmount() {
     setAmount(amount + 1);
@@ -24,7 +27,9 @@ export default function ProductCard(props: { order: OrderedProduct }) {
         </figure>
         <div className="card-body">
           <h2 className="card-title text-neutral-focus">{props.order.product.product_name}</h2>
-          <div className="badge badge-secondary">{props.order.product.in_stock ? 'InStock' : 'OutOfStock'}</div>
+          <div className="badge badge-secondary">
+            {props.order.product.in_stock - amount > 0 ? 'InStock' : 'OutOfStock'}
+          </div>
           <p className="text-base-content justify-start">
             $ {props.order.product.unit_price} {props.order.product.unit_quantity}
           </p>
@@ -35,21 +40,13 @@ export default function ProductCard(props: { order: OrderedProduct }) {
                 decreaseAmount={decreaseAmount.bind(increaseAmount)}
                 amount={amount}
               />
-              {/* add order button */}
               <OrderButton
-                label="add all"
+                label="Add Cart"
                 order_id={order_id}
                 product_id={props.order.product.product_id}
                 quantity={amount}
                 price={props.order.product.unit_price}
-              />
-              {/* delete order button */}
-              <OrderButton
-                label="delete"
-                order_id={order_id}
-                product_id={props.order.product.product_id}
-                quantity={amount}
-                price={props.order.product.unit_price}
+                in_stock={props.order.product.in_stock - amount > 0}
               />
             </>
           </div>
