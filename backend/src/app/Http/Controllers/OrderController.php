@@ -57,17 +57,25 @@ class OrderController extends Controller
          // save the order record
         $order->save();
 
-        // Update the quantity of the product
-            // add the product's previous stock number
-        $product->in_stock += $previousQuantity;
-            // withdraw the product's stock number
-        $product->in_stock -= $quantity;
-        $product->save();
-        return response()->json([
-            'message' => 'Product added to order.',
-            'order_id' => $order->order_id,
-            'total_amount' => $order->total_amount,
-        ]);
+        try {
+            // Update the quantity of the product
+                // add the product's previous stock number
+            $product->in_stock += $previousQuantity;
+                // withdraw the product's stock number
+            $product->in_stock -= $quantity;
+            $product->save();
+            return response()->json([
+                'message' => 'Product added to order.',
+                'order_id' => $order->order_id,
+                'total_amount' => $order->total_amount,
+            ]);
+        } catch (\Exception $e) {
+            // recover the values that are changed in try statement
+            $product->in_stock += $quantity;
+            $product->in_stock -= $previousQuantity;
+            $product->save();
+            return response()->json(['in_stock'=> $product->in_stock ,'message' => $e->getMessage()], 500);
+        }
     }
 
 

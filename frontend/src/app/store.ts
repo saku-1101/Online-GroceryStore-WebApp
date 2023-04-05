@@ -3,7 +3,7 @@ import { appReducer } from '../slices/appSlice';
 
 export const store = configureStore({
   reducer: {
-    app: appReducer, // state を追加
+    app: appReducer, // add store: Reducer pair
   },
 });
 

@@ -47,7 +47,7 @@ export function addOrder(order_id: string, product_id: string, quantity: string)
     })
     .then(responseBody)
     .catch((error) => {
-      console.log(error);
+      console.log(error.response.data);
     });
 }
 
