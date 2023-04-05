@@ -27,7 +27,20 @@ export default function DraggableCart() {
     if (res.order_details.length === res.products.length) {
       const newOrderList: Array<OrderedProduct> = [];
       for (let i = 0; i < res.order_details.length; i++) {
-        newOrderList.push({ product: res.products[i], order_detail: res.order_details[i] });
+        newOrderList.push({
+          product_id: res.products[i].product_id,
+          product_name: res.products[i].product_name,
+          unit_price: res.products[i].unit_price,
+          unit_quantity: res.products[i].unit_quantity,
+          in_stock: res.products[i].in_stock,
+          category: res.products[i].category,
+          url: res.products[i].url,
+          detail_id: res.order_details[i].detail_id,
+          order_id: res.order_details[i].order_id,
+          quantity: res.order_details[i].quantity,
+          created_at: res.order_details[i].created_at,
+          updated_at: res.order_details[i].updated_at,
+        });
       }
       // register to the global variable
       dispatch(appActions.setOrderDetails(newOrderList));
