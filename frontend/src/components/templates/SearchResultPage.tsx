@@ -13,7 +13,7 @@ export default function SearchResultPage() {
       <div className="flex justify-center">
         <div className="w-3/4 grid grid-cols-3 gap-10">
           {results.map((result: Product) => (
-            <ProductCard key={result.product_id} product={result} button="ADD ALL" isCategory={false} />
+            <ProductCard key={result.product_id} product={result} button="Add Cart" isCategory={false} />
           ))}
         </div>
       </div>

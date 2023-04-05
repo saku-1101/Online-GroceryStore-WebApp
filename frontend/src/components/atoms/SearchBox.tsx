@@ -22,7 +22,7 @@ export default function SearchBox() {
 
     // register to the global variable
     dispatch(appActions.setSearchResult(res.products));
-    console.log(result);
+
     navigate('/search/result');
   }
   return (
