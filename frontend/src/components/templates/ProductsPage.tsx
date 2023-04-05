@@ -22,7 +22,7 @@ export default function CategoryPage() {
       <div className="flex justify-center">
         <div className="w-3/4 grid grid-cols-3 gap-10">
           {products.map((product: Product) => (
-            <ProductCard key={product.product_id} product={product} button="ADD ALL" isCategory={false} />
+            <ProductCard key={product.product_id} product={product} button="Add Cart" isCategory={false} />
           ))}
         </div>
       </div>

@@ -47,7 +47,7 @@ export function addOrder(order_id: string, product_id: string, quantity: string)
     })
     .then(responseBody)
     .catch((error) => {
-      console.log(error);
+      console.log(error.response.data);
     });
 }
 
@@ -64,7 +64,7 @@ export function checkOut(name: string, email: string, orderId: string) {
 
 export function showOrder(orderId: string) {
   return instance
-    .get('/order' + orderId)
+    .get('/order/' + orderId)
     .then(responseBody)
     .catch((error) => console.log(error));
 }

@@ -8,6 +8,7 @@ export default function OrderButton(props: {
   product_id: number;
   quantity: number;
   price: number;
+  in_stock: boolean;
 }) {
   const dispatch = useAppDispatch();
 
@@ -19,7 +20,11 @@ export default function OrderButton(props: {
   }
   return (
     <>
-      <button className="btn btn-primary" onClick={(e: any) => addOrderHandler()}>
+      <button
+        disabled={props.in_stock ? false : true}
+        className="btn btn-primary"
+        onClick={(e: any) => addOrderHandler()}
+      >
         {props.label}
       </button>
     </>

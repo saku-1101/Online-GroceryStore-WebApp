@@ -13,6 +13,7 @@ import SearchResultPage from './components/templates/SearchResultPage';
 import SelectTheCategoryError from './components/templates/SelectTheCategoryError';
 import Order from './components/templates/Order';
 import Cart from './components/templates/Cart';
+import Home from './components/templates/Home';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
       {
         path: '/category',
         element: <CategoryPage />,
