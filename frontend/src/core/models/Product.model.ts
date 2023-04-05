@@ -6,5 +6,4 @@ export interface Product {
   in_stock: number;
   category: number;
   url: string;
-  //   description: string;
 }
