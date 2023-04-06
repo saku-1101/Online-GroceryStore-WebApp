@@ -7,7 +7,7 @@ interface AppState {
   items: number;
   subtotal: number;
   categories: [];
-  selected_category: number;
+  selected_sub_category: number;
   search_results: [];
   order_details: [];
 }
@@ -18,7 +18,7 @@ const initialState: AppState = {
   items: 0,
   subtotal: 0,
   categories: [],
-  selected_category: 0,
+  selected_sub_category: 0,
   search_results: [],
   order_details: [],
 };
@@ -33,8 +33,8 @@ export const appSlice = createSlice({
     setCategory: (state, action: PayloadAction<[]>) => {
       state.categories = action.payload;
     },
-    setCategoryId: (state, action: PayloadAction<number>) => {
-      state.selected_category = action.payload;
+    setSubCategoryId: (state, action: PayloadAction<number>) => {
+      state.selected_sub_category = action.payload;
     },
     setSearchResult: (state, action: PayloadAction<[]>) => {
       state.search_results = action.payload;
@@ -56,7 +56,7 @@ export const appActions = appSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectOrderId = (state: RootState) => state.app.order_id;
 export const selectCategory = (state: RootState) => state.app.categories;
-export const selectCategoryId = (state: RootState) => state.app.selected_category;
+export const selectSubCategoryId = (state: RootState) => state.app.selected_sub_category;
 export const selectSearchResult = (state: RootState) => state.app.search_results;
 export const selectItems = (state: RootState) => state.app.items;
 export const selectTotal = (state: RootState) => state.app.subtotal;
