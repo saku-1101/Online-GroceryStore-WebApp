@@ -11,8 +11,8 @@ CREATE TABLE `products` (
   `unit_price` float(8,2) DEFAULT NULL,
   `unit_quantity` varchar(15) DEFAULT NULL,
   `in_stock` int(10) unsigned DEFAULT NULL,
-  `top_category` int(10) unsigned DEFAULT NULL,
-  `second_category` int(10) unsigned DEFAULT NULL,
+  `category` int(10) unsigned DEFAULT NULL,
+  `sub_category` int(10) unsigned DEFAULT NULL,
   `url` VARCHAR(512) CHARACTER SET 'ascii' COLLATE 'ascii_general_ci' NOT NULL,
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -39,11 +39,8 @@ INSERT INTO `products` VALUES (16, 'Milk', 2.49, 'per gallon', 50, 2, 5, 'https:
 INSERT INTO `products` VALUES (17, 'Eggs', 1.99, 'per dozen', 75, 2, 5, 'https://source.unsplash.com/Hj53USePB1E');
 INSERT INTO `products` VALUES (18, 'Butter', 3.49, 'per pound', 25, 2, 5, 'https://source.unsplash.com/094mP_CBdpM');
 INSERT INTO `products` VALUES (19, 'Cheese', 4.99, 'per pound', 50, 2, 5, 'https://source.unsplash.com/_L5MGd0w1FQ');
-INSERT INTO `products` VALUES (20, 'Bread', 1.49, 'per loaf', 100, 3, 6, 'https://source.unsplash.com/rsWZ-P9FbQ4');
-INSERT INTO `products` VALUES (21, 'Bagels', 2.49, 'per 6 pack', 75, 3, 6, 'https://source.unsplash.com/Z9yALdymUUI');
-INSERT INTO `products` VALUES (22, 'English Muffins', 1.99, 'per 6 pack', 50, 3, 6, 'https://source.unsplash.com/A5jf5EmBAf8');
-INSERT INTO `products` VALUES (23, 'Hamburger Buns', 1.49, 'per 8 pack', 75, 3, 6, 'https://source.unsplash.com/Zu_w3tFOtUA');
-INSERT INTO `products` VALUES (24, 'Hot Dog Buns', 1.49, 'per 8 pack', 75, 3, 6, 'https://source.unsplash.com/w96PYF0Uwjs');
+INSERT INTO `products` VALUES (23, 'Hamburger Buns', 1.49, 'per 8 pack', 75, 3, 20, 'https://source.unsplash.com/Zu_w3tFOtUA');
+INSERT INTO `products` VALUES (24, 'Hot Dog Buns', 1.49, 'per 8 pack', 75, 3, 20, 'https://source.unsplash.com/w96PYF0Uwjs');
 INSERT INTO `products` VALUES (25, 'Chicken', 4.99, 'per pound', 25, 4, 7, 'https://source.unsplash.com/9zLa37VNL38');
 INSERT INTO `products` VALUES (26, 'Beef', 6.99, 'per pound', 50, 4, 7, 'https://source.unsplash.com/WmTK_QfDxlE');
 INSERT INTO `products` VALUES (27, 'Pork', 3.99, 'per pound', 75, 4, 7, 'https://source.unsplash.com/o_qvA6R7hgs');
@@ -64,13 +61,13 @@ INSERT INTO `products` VALUES (41, 'Canned Corn', 0.99, 'per can', 75, 5, 9, 'ht
 INSERT INTO `products` VALUES (42, 'Canned Beans', 1.49, 'per can', 50, 5, 9, 'https://source.unsplash.com/oD7H_J-vJm4');
 INSERT INTO `products` VALUES (43, 'Canned Soup', 1.99, 'per can', 50, 5, 9, 'https://source.unsplash.com/Vl78eNdiJaQ');
 INSERT INTO `products` VALUES (44, 'Peanut Butter', 3.99, 'per jar', 50, 5, 10, 'https://source.unsplash.com/q-RyWM8uYwY');
-INSERT INTO `products` VALUES (45, 'Jelly', 2.49, 'per jar', 75, 8, 10, 'https://source.unsplash.com/LU_fCezP9-o');
-INSERT INTO `products` VALUES (46, 'Bologna', 2.99, 'per pound', 25, 6, 7, 'https://source.unsplash.com/sA3wymYqyaI');
-INSERT INTO `products` VALUES (47, 'Hot Dogs', 3.49, 'per pack', 50, 6, 7, 'https://source.unsplash.com/0GDN7NSoYRI');
-INSERT INTO `products` VALUES (48, 'Ground Turkey', 4.99, 'per pound', 50, 6, 7, 'https://source.unsplash.com/O4wSmNb6w18');
-INSERT INTO `products` VALUES (49, 'Ground Beef', 5.99, 'per pound', 50, 6, 7, 'https://source.unsplash.com/pEv_SxDR9cA');
-INSERT INTO `products` VALUES (50, 'Steak', 12.99, 'per pound', 25, 6, 7, 'https://source.unsplash.com/pe9dvM1rQkM');
-INSERT INTO `products` VALUES (51, 'Chicken Nuggets', 3.49, 'per bag', 50, 6, 7, 'https://source.unsplash.com/TEplqAWpCIs');
+INSERT INTO `products` VALUES (45, 'Jelly', 2.49, 'per jar', 75, 8, 17, 'https://source.unsplash.com/LU_fCezP9-o');
+INSERT INTO `products` VALUES (46, 'Bologna', 2.99, 'per pound', 25, 6, 6, 'https://source.unsplash.com/sA3wymYqyaI');
+INSERT INTO `products` VALUES (47, 'Hot Dogs', 3.49, 'per pack', 50, 6, 6, 'https://source.unsplash.com/0GDN7NSoYRI');
+INSERT INTO `products` VALUES (48, 'Ground Turkey', 4.99, 'per pound', 50, 6, 6, 'https://source.unsplash.com/O4wSmNb6w18');
+INSERT INTO `products` VALUES (49, 'Ground Beef', 5.99, 'per pound', 50, 4, 7, 'https://source.unsplash.com/pEv_SxDR9cA');
+INSERT INTO `products` VALUES (50, 'Steak', 12.99, 'per pound', 25, 6, 6, 'https://source.unsplash.com/pe9dvM1rQkM');
+INSERT INTO `products` VALUES (51, 'Chicken Nuggets', 3.49, 'per bag', 50, 6, 6, 'https://source.unsplash.com/TEplqAWpCIs');
 INSERT INTO `products` VALUES (52, 'Frozen Vegetables', 2.49, 'per bag', 75, 7, 11, 'https://source.unsplash.com/3TmhC2vquPk');
 INSERT INTO `products` VALUES (53, 'Frozen Pizza', 4.99, 'per pizza', 50, 7, 11, 'https://source.unsplash.com/MQUqbmszGGM');
 INSERT INTO `products` VALUES (54, 'Ice Cream', 3.99, 'per pint', 25, 7, 11, 'https://source.unsplash.com/qhFDN9xatTQ');
