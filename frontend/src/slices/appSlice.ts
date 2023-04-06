@@ -19,7 +19,7 @@ interface AppState {
   order_id: number;
   items: Array<Items>;
   items_sum: number;
-  subtotal: Array<Product>;
+  subtotal: Array<Subtotal>;
   total: number;
   categories: Array<Product>;
   sub_categories: Array<Product>;

@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import { addOrder } from '../../core/infrastructures/AppApi';
 import { appActions } from '../../slices/appSlice';
 
