@@ -1,6 +1,5 @@
 import PageTitle from '../atoms/PageTitle';
 import OrderDetails from '../atoms/OrderDetails';
-import { Link } from 'react-router-dom';
 import { checkOut } from '../../core/infrastructures/AppApi';
 import { useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
@@ -116,10 +115,11 @@ export default function Order() {
         form.suburb != '' &&
         form.state != '' &&
         form.country != '' &&
-        form.email != '' ? (
+        form.email != '' &&
+        message == '' ? (
           ''
         ) : (
-          <p className="text-sm text-error text-left">Please provide us with all the essential information.</p>
+          <p className="text-sm text-error text-left">Please provide us with all the correct essential information.</p>
         )}
 
         <div className="w-full flex flex-row justify-center gap-10">
@@ -131,7 +131,8 @@ export default function Order() {
               form.suburb != '' &&
               form.state != '' &&
               form.country != '' &&
-              form.email != ''
+              form.email != '' &&
+              message == ''
                 ? false
                 : true
             }

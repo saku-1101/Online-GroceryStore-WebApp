@@ -20,9 +20,18 @@ export function getCategories() {
     });
 }
 
-export function getProductsByCategory(category: string | undefined) {
+export function getSubCategoriesByCategory(category: string | undefined) {
   return instance
     .get('/product/category/' + category)
+    .then(responseBody)
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export function getProductsByCategory(category: string | undefined, sub_category: string | undefined) {
+  return instance
+    .get('/product/category/' + category + '/sub_category/' + sub_category)
     .then(responseBody)
     .catch((error) => {
       console.log(error);

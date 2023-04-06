@@ -22,29 +22,48 @@ class ProductController extends Controller
     }
 
     /**
-     * Display a listing of the category.
+     * Display a listing of the top category.
      *
      * @return \Illuminate\Http\Response
      */
     public function getCategory()
     {
-    // DBよりProductテーブルのcategoryとurlの値を重複を除いて取得
-    $products = Product::select('category', 'url')->distinct()->get();
+    // DBよりProductテーブルのtop categoryの値を重複を除いて取得
+    $products = Product::groupBy('category')
+    ->get();
 
     // compact('products')は['products' => $products]としているのと同意
     return response()->json(compact('products'));
     }
     
     /**
-     * Display products of the specific category.
-     *
+     * Display a listing of the second category.
      * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function getProductsByCategory($category)
+    public function getSubCategoriesByCategory($category)
     {
-        // DBより指定されたcategoryのProductテーブルの値を取得
-        $products = Product::where('category', $category)->get();
+        // DBよりcategoryが一致するproductを抜き出す
+        // DBよりProductテーブルのsecond categoryとurlの値を重複を除いて取得
+        $products = Product::where('category', $category)
+                   ->groupBy('sub_category')
+                   ->get();
+
+        // compact('products')は['products' => $products]としているのと同意
+        return response()->json(compact('products'));
+    }
+    
+    /**
+     * Display products of the specific category.
+     * @param  int  $category
+     * @param  int  $sub_category
+     * @return \Illuminate\Http\Response
+     */
+    public function getProductsByCategory($category, $sub_category)
+    {
+        $products = Product::where('category', $category)
+                            ->where('sub_category', $sub_category)
+                            ->get();
 
         // compact('products')は['products' => $products]としているのと同意
         return response()->json(compact('products'));

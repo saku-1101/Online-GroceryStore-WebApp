@@ -34,6 +34,7 @@ export default function DraggableCart() {
           unit_quantity: res.products[i].unit_quantity,
           in_stock: res.products[i].in_stock,
           category: res.products[i].category,
+          sub_category: res.products[i].sub_category,
           url: res.products[i].url,
           detail_id: res.order_details[i].detail_id,
           order_id: res.order_details[i].order_id,

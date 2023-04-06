@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import Root from './routes/root';
 import CategoryPage from './components/templates/CategoryPage';
+import SubCategoryPage from './components/templates/SubCategoryPage';
 import ErrorPage from './error-page';
 import Dummy from './components/templates/Dummy';
 import ProductsPage from './components/templates/ProductsPage';
@@ -30,11 +31,19 @@ const router = createBrowserRouter([
         element: <CategoryPage />,
       },
       {
-        path: '/product/category/0',
+        path: '/category/0',
         element: <SelectTheCategoryError />,
       },
       {
-        path: '/product/category/:category',
+        path: '/category/:category',
+        element: <SubCategoryPage />,
+      },
+      {
+        path: '/category/:category/sub_category/0',
+        element: <SelectTheCategoryError />,
+      },
+      {
+        path: '/category/:category/sub_category/:sub_category',
         element: <ProductsPage />,
       },
       {

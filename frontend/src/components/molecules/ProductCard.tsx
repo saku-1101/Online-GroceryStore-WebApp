@@ -5,8 +5,12 @@ import CountingButton from '../atoms/CountingButton';
 import OrderButton from '../atoms/OrderButton';
 import { useAppSelector } from '../../app/hooks';
 import { selectOrderId } from '../../slices/appSlice';
+import { useLocation } from 'react-router-dom';
+import { category_name, sub_category_name } from '../../core/data/replace.data';
 
 export default function ProductCard(props: { product: Product; button: string; isCategory: boolean }) {
+  // current directoryによってルーティングを振り分ける用途
+  const location = useLocation().pathname;
   const order_id: number = useAppSelector(selectOrderId);
   const [amount, setAmount] = useState<number>(0);
   function decreaseAmount() {
@@ -25,14 +29,22 @@ export default function ProductCard(props: { product: Product; button: string; i
 
   return (
     <>
-      <div className="card card-compact w-full bg-base-100 shadow-xl p-0">
-        <figure>
-          <img src={props.product.url} alt="" />
+      {/* use aspect ratio enables to tidy up the ratio of width and height between cards. */}
+      <div className="card card-compact w-full aspect-square bg-base-100 shadow-xl p-0">
+        <figure className="w-full h-3/4">
+          <img src={props.product.url} alt="" className="object-cover w-full h-full" />
         </figure>
         <div className="card-body">
           {props.isCategory ? (
-            <h2 className="card-title text-neutral-focus">{props.product.category}</h2>
+            !location.includes(props.product.category.toString()) ? (
+              // category name
+              <h2 className="card-title text-neutral-focus">{category_name[props.product.category]}</h2>
+            ) : (
+              // sub category name
+              <h2 className="card-title text-neutral-focus">{sub_category_name[props.product.sub_category]}</h2>
+            )
           ) : (
+            // product name
             <h2 className="card-title text-neutral-focus">{props.product.product_name}</h2>
           )}
           {props.isCategory ? (
@@ -51,7 +63,12 @@ export default function ProductCard(props: { product: Product; button: string; i
           )}
           <div className="card-actions justify-end">
             {props.isCategory ? (
-              <DefaultButton label={props.button} category_id={props.product.category} />
+              <DefaultButton
+                label={props.button}
+                category_id={props.product.category}
+                subcategory_id={props.product.sub_category}
+                isSub={location.includes(props.product.category.toString())}
+              />
             ) : (
               <>
                 <CountingButton
