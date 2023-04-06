@@ -26,10 +26,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTopCategory()
+    public function getCategory()
     {
-    // DBよりProductテーブルのtop categoryとurlの値を重複を除いて取得
-    $products = Product::select('top_category', 'url')->distinct()->get();
+    // DBよりProductテーブルのtop categoryの値を重複を除いて取得
+    $products = Product::groupBy('category')
+    ->get();
 
     // compact('products')は['products' => $products]としているのと同意
     return response()->json(compact('products'));
@@ -37,27 +38,32 @@ class ProductController extends Controller
     
     /**
      * Display a listing of the second category.
-     *
+     * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function getSecondCategory()
+    public function getSubCategoriesByCategory($category)
     {
-    // DBよりProductテーブルのsecond categoryとurlの値を重複を除いて取得
-    $products = Product::select('second_category', 'url')->distinct()->get();
+        // DBよりcategoryが一致するproductを抜き出す
+        // DBよりProductテーブルのsecond categoryとurlの値を重複を除いて取得
+        $products = Product::where('category', $category)
+                   ->groupBy('sub_category')
+                   ->get();
 
-    // compact('products')は['products' => $products]としているのと同意
-    return response()->json(compact('products'));
+        // compact('products')は['products' => $products]としているのと同意
+        return response()->json(compact('products'));
     }
     
     /**
      * Display products of the specific category.
-     *
-     * @param  int  $second_category
+     * @param  int  $category
+     * @param  int  $sub_category
      * @return \Illuminate\Http\Response
      */
-    public function getProductsByCategory($second_category)
+    public function getProductsByCategory($category, $sub_category)
     {
-        $products = Product::where('second_category', $second_category)->get();
+        $products = Product::where('category', $category)
+                            ->where('sub_category', $sub_category)
+                            ->get();
 
         // compact('products')は['products' => $products]としているのと同意
         return response()->json(compact('products'));
