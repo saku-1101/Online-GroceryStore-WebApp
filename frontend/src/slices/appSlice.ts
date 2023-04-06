@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../src/app/store';
-import { OrderedProduct } from '../src/core/models/OrderedProduct.model';
+import type { RootState } from '../app/store';
+import { OrderedProduct } from '../core/models/OrderedProduct.model';
+import { Product } from '../core/models/Product.model';
+
+export const category_name = { 0: 'Fruits & Vegetables' };
+export const sub_category_name = { 0: 'Fruits' };
 
 interface Items {
   product_id: number;
@@ -15,11 +19,13 @@ interface AppState {
   order_id: number;
   items: Array<Items>;
   items_sum: number;
-  subtotal: Array<Subtotal>;
+  subtotal: Array<Product>;
   total: number;
-  categories: [];
+  categories: Array<Product>;
+  sub_categories: Array<Product>;
   selected_category: number;
-  search_results: [];
+  selected_sub_category: number;
+  search_results: Array<Product>;
   order_details: Array<OrderedProduct>;
 }
 
@@ -31,7 +37,9 @@ const initialState: AppState = {
   subtotal: [],
   total: 0,
   categories: [],
+  sub_categories: [],
   selected_category: 0,
+  selected_sub_category: 0,
   search_results: [],
   order_details: [],
 };
@@ -43,13 +51,19 @@ export const appSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setCategory: (state, action: PayloadAction<[]>) => {
+    setCategory: (state, action: PayloadAction<Array<Product>>) => {
       state.categories = action.payload;
+    },
+    setSubCategory: (state, action: PayloadAction<Array<Product>>) => {
+      state.sub_categories = action.payload;
     },
     setCategoryId: (state, action: PayloadAction<number>) => {
       state.selected_category = action.payload;
     },
-    setSearchResult: (state, action: PayloadAction<[]>) => {
+    setSubCategoryId: (state, action: PayloadAction<number>) => {
+      state.selected_sub_category = action.payload;
+    },
+    setSearchResult: (state, action: PayloadAction<Array<Product>>) => {
       state.search_results = action.payload;
     },
     setItems: (state, action: PayloadAction<Items>) => {
@@ -81,7 +95,9 @@ export const appActions = appSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectOrderId = (state: RootState) => state.app.order_id;
 export const selectCategory = (state: RootState) => state.app.categories;
+export const selectSubCategory = (state: RootState) => state.app.sub_categories;
 export const selectCategoryId = (state: RootState) => state.app.selected_category;
+export const selectSubCategoryId = (state: RootState) => state.app.selected_sub_category;
 export const selectSearchResult = (state: RootState) => state.app.search_results;
 export const selectItems = (state: RootState) => state.app.items_sum;
 export const selectTotal = (state: RootState) => state.app.total;

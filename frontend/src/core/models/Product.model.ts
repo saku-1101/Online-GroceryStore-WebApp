@@ -5,5 +5,6 @@ export interface Product {
   unit_quantity: number;
   in_stock: number;
   category: number;
+  sub_category: number;
   url: string;
 }

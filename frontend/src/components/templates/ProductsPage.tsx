@@ -6,15 +6,16 @@ import PageTitle from '../atoms/PageTitle';
 import { getProductsByCategory } from '../../core/infrastructures/AppApi';
 
 export default function CategoryPage() {
+  // url中の : で示されたパラメータのリストを返す
   const params = useParams();
   const [products, setProducts] = useState([]);
-  const setData = async (category: string | undefined) => {
-    const res = await getProductsByCategory(category);
+  const setData = async (category: string | undefined, sub_category: string | undefined) => {
+    const res = await getProductsByCategory(category, sub_category);
     setProducts(res.products);
   };
   useEffect(() => {
-    setData(params.category);
-  }, [params.category]);
+    setData(params.category, params.sub_category);
+  }, [params.sub_category]);
 
   return (
     <div className="flex flex-col justify-center">
