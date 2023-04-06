@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('unit_quantity', 15);
             $table->unsignedBigInteger('in_stock');
             $table->unsignedBigInteger('category');
+            $table->unsignedBigInteger('sub_category');
             $table->string('url', 512);
         });
     }
