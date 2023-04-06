@@ -1,7 +1,7 @@
 <div>
     <p>Hey, {{$name}}!☺️ Thank you for shopping with us today!</p>
     <p>Order ID: {{ $order->order_id  }}<p>
-    <p>Price: {{ $order->total_amount  }}<p>
+    <p>Price: $ {{ $order->total_amount  }}<p>
     <p>{{$order_detail}}</p>
     <p>This order is placed at {{$when}} .</p>
     <p>We're looking forward to your next visit!</p>
