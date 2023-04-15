@@ -24,16 +24,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('sample', [SampleController::class, 'getJson']);
 
-Route::get('/product/category', [ProductController::class, 'getCategory']);
-Route::get('/product/category/{category}', [ProductController::class, 'getSubCategoriesByCategory']);
-Route::get('/product/category/{category}/sub_category/{sub_category}', [ProductController::class, 'getProductsByCategory']);
-Route::get('/product/search', [ProductController::class, 'search']);
-Route::resource('product', 'App\Http\Controllers\ProductController');
+Route::get('/api/product/category', [ProductController::class, 'getCategory']);
+Route::get('/api/product/category/{category}', [ProductController::class, 'getSubCategoriesByCategory']);
+Route::get('/api/product/category/{category}/sub_category/{sub_category}', [ProductController::class, 'getProductsByCategory']);
+Route::get('/api/product/search', [ProductController::class, 'search']);
+Route::resource('/api/product', 'App\Http\Controllers\ProductController');
 
-Route::post('/order/add', [OrderController::class, 'addOrder']);
-Route::delete('/order/delete/all', [OrderController::class, 'destroy']);
-Route::delete('/order/delete/{order_id}/{product_id}', [OrderController::class, 'deleteByProductId']);
-Route::resource('order', 'App\Http\Controllers\OrderController');
+Route::post('/api/order/add', [OrderController::class, 'addOrder']);
+Route::delete('/api/order/delete/all', [OrderController::class, 'destroy']);
+Route::delete('/api/order/delete/{order_id}/{product_id}', [OrderController::class, 'deleteByProductId']);
+Route::resource('/api/order', 'App\Http\Controllers\OrderController');
 
 //Email Route
-Route::post('/checkout', [App\Http\Controllers\EmailController::class, 'mail']);
+Route::post('/api/checkout', [App\Http\Controllers\EmailController::class, 'mail']);
