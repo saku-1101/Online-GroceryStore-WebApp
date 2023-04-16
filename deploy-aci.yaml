@@ -1,0 +1,72 @@
+apiVersion: '2021-10-01'
+location: japanwest
+name: myContainerGroup # Name of the container group
+properties: # Properties of container group
+  containers: # Array of container instances in the group
+    # nginx container
+    - name: grocerystore-nginx # Name of an instance
+      properties:
+        image: sakupi/grocerystore-nginx # コンテナのイメージ名を指定
+        resources: # コンテナに割り当てるCPUとメモリ
+          requests:
+            cpu: 1
+            memoryInGb: 1.5
+        ports:
+          - port: 80
+    # php backend container
+    - name: grocerystore-backend
+      properties:
+        image: sakupi/grocerystore-backend
+        resources:
+          requests:
+            cpu: 1
+            memoryInGb: 1.5
+        ports:
+          - port: 9000
+        # AzureStorage上で永続化するパスを指定
+        # MongoDB上の/data/mongoazディレクトリを永続する
+        volumeMounts:
+          - mountPath: /data
+            name: backend-volume
+    # db container
+    - name: grocerystore-db
+      properties:
+        image: sakupi/grocerystore-db
+        resources:
+          requests:
+            cpu: 1
+            memoryInGb: 1.5
+        ports:
+          - port: 3306
+    # frontend container
+    - name: grocerystore-frontend
+      properties:
+        image: sakupi/grocerystore-frontend
+        resources:
+          requests:
+            cpu: 1
+            memoryInGb: 1.5
+        ports:
+          - port: 8000
+  osType: Linux
+  ipAddress:
+    type: Public
+    ports:
+      - protocol: tcp
+        port: 80
+    # ユニークな値を指定。下記の設定がインターネット上で公開されるURLに使用される。
+    dnsNameLabel: mygrocerystoreapp
+  # 永続化するボリュームの設定
+  volumes:
+    - name: backend-volume
+      azureFile:
+        # 先ほど作成したAzureのストレージアカウントの情報を指定
+        sharename: sakurabackendshare
+        storageAccountName: sakuazstorage
+        storageAccountKey: v8NWxwgriHBqha5k82efhIB/diqFXZtpSYBO4fIbSOF2e5sFVadHpjxziLXbiMni/JQzTcFifcnD+ASta+4+RQ==
+tags: null
+type: Microsoft.ContainerInstance/containerGroups
+imageRegistryCredentials:
+  - server: imageRegistryLoginServer
+    username: imageRegistryUsername
+    password: imageRegistryPassword

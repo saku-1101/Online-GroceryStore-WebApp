@@ -7,6 +7,7 @@ ENV MYSQL_DATABASE=laravel \
     TZ=Australia/Sydney
 
 COPY ./my.cnf /etc/my.cnf
+COPY ./initdb.d /docker-entrypoint-initdb.d
 
 RUN chmod 644 /etc/my.cnf
 

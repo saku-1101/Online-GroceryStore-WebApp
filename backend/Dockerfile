@@ -1,7 +1,10 @@
 FROM php:8.1-fpm-buster
 
+# COPY ./src /data
+
 ENV COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSE_HOME=/composer
+
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
