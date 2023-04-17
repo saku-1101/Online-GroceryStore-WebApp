@@ -1,0 +1,94 @@
+{
+  "AWSEBDockerrunVersion": 3,
+  "volumes": [
+    {
+      "name": "nginx-vol",
+      "host": {
+        "sourcePath": "/var/app/current/nginx"
+      }
+    },
+    {
+      "name": "nginx-proxy-conf-vol",
+      "host": {
+        "sourcePath": "/var/app/current/nginx/nginx.conf"
+      }
+    },
+    {
+      "name": "backend-vol",
+      "host": {
+        "sourcePath": "/var/app/current/backend/src"
+      }
+    },
+    {
+      "name": "db-vol",
+      "host": {
+        "sourcePath": "/var/app/current/db"
+      }
+    },
+    {
+      "name": "frontend-vol",
+      "host": {
+        "sourcePath": "/var/app/current/frontend"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "nginx",
+      "image": "sakupi/grocerystore-nginx",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["frontend", "backend"]
+    },
+    {
+      "name": "backend",
+      "image": "sakupi/grocerystore-backend",
+      "essential": true,
+      "memory": 128,
+      "mountPoints": [
+        {
+          "sourceVolume": "backend-vol",
+          "containerPath": "/data"
+        }
+      ],
+      "portMappings": [
+        {
+          "hostPort": 9000,
+          "containerPort": 9000
+        }
+      ],
+      "links": ["db"]
+    },
+    {
+      "name": "db",
+      "image": "sakupi/grocerystore-db",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 3306,
+          "containerPort": 3306
+        }
+      ]
+    },
+    {
+      "name": "frontend",
+      "image": "sakupi/grocerystore-frontend",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 8000,
+          "containerPort": 8000
+        }
+      ],
+      "links": ["backend"]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  nginx:
+    container_name: grocerystore-nginx
+    # image: sakupi/grocerystore-nginx
+    image: mycontainerregistry3939.azurecr.io/grocerystore-nginx
+    domainname: 'mygrocerystoreapp'
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+      - frontend
+  backend:
+    # image: sakupi/grocerystore-backend
+    image: mycontainerregistry3939.azurecr.io/grocerystore-backend
+    container_name: grocerystore-backend
+    build: ./backend
+    volumes:
+      - ./backend/src:/data
+    ports:
+      - '9000:9000'
+    depends_on:
+      - db
+  db:
+    # image: sakupi/grocerystore-db
+    image: mycontainerregistry3939.azurecr.io/grocerystore-db
+    container_name: grocerystore-db
+    build: ./db
+    restart: always
+    ports:
+      - '3306:3306'
+  frontend:
+    # image: sakupi/grocerystore-frontend
+    # image: mycontainerregistry3939.azurecr.io/grocerystore-frontend
+    container_name: grocerystore-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'
+    tty: true
+    depends_on:
+      - backend
+# volumes:
+#   backend-volume:
+#     driver: azure_file
+#     driver_opts:
+#       share_name: sakurabackendshare
+#       storage_account_name: sakuazstorage
+#   db-volume:
+#     driver: azure_file
+#     driver_opts:
+#       share_name: sakuradbshare
+#       storage_account_name: sakuazstorage
+#   nginx-volume:
+#     driver: azure_file
+#     driver_opts:
+#       share_name: sakuranginxshare
+#       storage_account_name: sakuazstorage

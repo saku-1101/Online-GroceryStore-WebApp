@@ -6,19 +6,12 @@ services:
       dockerfile: ./nginx/Dockerfile
     ports:
       - '80:80'
-    # volumes:
-    # - backend_volume:/data
-    # - nginx_volume:/etc/nginx/nginx.conf
-    # - ./backend/src:/data
-    # - ./nginx/nginx.conf:/etc/nginx/nginx.conf:cached
     depends_on:
       - backend
       - frontend
   backend:
     build: ./backend
     volumes:
-      # backend のみボリュームじゃまずい
-      # - backend_volume:/data
       - ./backend/src:/data
     ports:
       - '9000:9000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 9000
@@ -29,8 +22,8 @@ services:
     restart: always
     ports:
       - '3306:3306'
-    # volumes:
-    #   - db_volume:/docker-entrypoint-initdb.d
+    volumes:
+      - db-volume:/docker-entrypoint-initdb.d
   frontend:
     build:
       context: ./frontend
@@ -41,16 +34,13 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
-    # volumes:
-    #   - ./frontend:/app
-    #   - /app/node_modules
-    #   - /app/dist
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/dist
     tty: true
     depends_on:
       - backend
-# volumes:
-# backend_volume:
-# db_volume:
-# nginx_volume:
-
+volumes:
+  db-volume:
 #本番環境でボリュームは必要ない為削除する

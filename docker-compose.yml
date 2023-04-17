@@ -1,62 +1,42 @@
 version: '3.9'
 services:
   nginx:
-    container_name: grocerystore-nginx
-    # image: sakupi/grocerystore-nginx
-    image: mycontainerregistry3939.azurecr.io/grocerystore-nginx
-    domainname: 'mygrocerystoreapp'
-    build:
-      context: ./
-      dockerfile: ./nginx/Dockerfile
+    image: sakupi/grocerystore-nginx
     ports:
       - '80:80'
     depends_on:
       - backend
       - frontend
   backend:
-    # image: sakupi/grocerystore-backend
-    image: mycontainerregistry3939.azurecr.io/grocerystore-backend
-    container_name: grocerystore-backend
-    build: ./backend
+    image: sakupi/grocerystore-backend
     volumes:
       - ./backend/src:/data
     ports:
-      - '9000:9000'
+      - '9000:9000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 9000
     depends_on:
       - db
   db:
-    # image: sakupi/grocerystore-db
-    image: mycontainerregistry3939.azurecr.io/grocerystore-db
-    container_name: grocerystore-db
-    build: ./db
+    image: sakupi/grocerystore-db
     restart: always
     ports:
       - '3306:3306'
+    # volumes:
+    #   - db-volume:/docker-entrypoint-initdb.d
   frontend:
-    # image: sakupi/grocerystore-frontend
-    # image: mycontainerregistry3939.azurecr.io/grocerystore-frontend
-    container_name: grocerystore-frontend
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
+    image: sakupi/grocerystore-frontend
+    working_dir: /app
     ports:
-      - '8000:8000'
+      - '8000:8000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 8000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/dist
     tty: true
     depends_on:
       - backend
 # volumes:
-#   backend-volume:
-#     driver: azure_file
-#     driver_opts:
-#       share_name: sakurabackendshare
-#       storage_account_name: sakuazstorage
 #   db-volume:
-#     driver: azure_file
-#     driver_opts:
-#       share_name: sakuradbshare
-#       storage_account_name: sakuazstorage
-#   nginx-volume:
-#     driver: azure_file
-#     driver_opts:
-#       share_name: sakuranginxshare
-#       storage_account_name: sakuazstorage
+#本番環境でボリュームは必要ない為削除する
