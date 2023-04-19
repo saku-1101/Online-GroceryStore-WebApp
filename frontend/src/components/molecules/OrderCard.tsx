@@ -5,7 +5,7 @@ import OrderButton from '../atoms/OrderButton';
 import { useAppSelector } from '../../app/hooks';
 import { selectOrderId } from '../../slices/appSlice';
 
-export default function ProductCard(props: { order: OrderedProduct }) {
+export default function OrderCard(props: { order: OrderedProduct }) {
   const order_id: number = useAppSelector(selectOrderId);
   const [amount, setAmount] = useState<number>(props.order.quantity);
   function decreaseAmount() {
@@ -42,7 +42,7 @@ export default function ProductCard(props: { order: OrderedProduct }) {
                 amount={amount}
               />
               <OrderButton
-                label="Add Cart"
+                label="Change Quantity"
                 order_id={order_id}
                 product_id={props.order.product_id}
                 quantity={amount}
