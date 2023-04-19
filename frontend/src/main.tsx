@@ -15,6 +15,7 @@ import SelectTheCategoryError from './components/templates/SelectTheCategoryErro
 import Order from './components/templates/Order';
 import Cart from './components/templates/Cart';
 import Home from './components/templates/Home';
+import ThankyouPage from './components/templates/ThankyouPage';
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: '/order',
         element: <Order />,
+      },
+      {
+        path: '/thankyou',
+        element: <ThankyouPage />,
       },
       {
         path: '/dummy',

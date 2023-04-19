@@ -46,8 +46,6 @@ export default function DraggableCart() {
       // register to the global variable
       dispatch(appActions.setOrderDetails(newOrderList));
     }
-    console.log('here');
-
     navigate('/cart');
   };
 
