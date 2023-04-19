@@ -1,20 +1,20 @@
 version: '3.9'
 services:
   nginx:
-    build: ./nginx
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
     ports:
-      - '8080:80'
-    volumes:
-      - ./backend/src:/data
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - '80:80'
     depends_on:
       - backend
+      - frontend
   backend:
     build: ./backend
     volumes:
       - ./backend/src:/data
     ports:
-      - 9000:9000 # this container is only reachable internally by other containers through the port 9000
+      - '9000:9000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 9000
     depends_on:
       - db
   db:
@@ -23,15 +23,14 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - mysql-vol:/var/lib/mysql
-      - ./db/initdb.d:/docker-entrypoint-initdb.d
+      - db-volume:/docker-entrypoint-initdb.d
   frontend:
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
     working_dir: /app
     ports:
-      - 8000:8000
+      - '8000:8000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 8000
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
@@ -42,6 +41,6 @@ services:
     tty: true
     depends_on:
       - backend
-
 volumes:
-  mysql-vol:
+  db-volume:
+#本番環境でボリュームは必要ない為削除する

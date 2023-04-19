@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  nginx:
+    image: sakupi/grocerystore-nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+      - frontend
+  backend:
+    image: sakupi/grocerystore-backend
+    volumes:
+      - ./backend/src:/data
+    ports:
+      - '9000:9000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 9000
+    depends_on:
+      - db
+  db:
+    image: sakupi/grocerystore-db
+    restart: always
+    ports:
+      - '3306:3306'
+    # volumes:
+    #   - db-volume:/docker-entrypoint-initdb.d
+  frontend:
+    image: sakupi/grocerystore-frontend
+    working_dir: /app
+    ports:
+      - '8000:8000' # Don't need to mount to host port. this container is only reachable internally by other containers through the port 8000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/dist
+    tty: true
+    depends_on:
+      - backend
+# volumes:
+#   db-volume:
+#本番環境でボリュームは必要ない為削除する
