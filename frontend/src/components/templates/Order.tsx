@@ -4,15 +4,26 @@ import { checkOut } from '../../core/infrastructures/AppApi';
 import { useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectOrderId } from '../../slices/appSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Order() {
   const [form, setState] = useState({ name: '', post: '', suburb: '', state: '', country: '', email: '' });
   const [message, setError] = useState('');
+  const [isDisable, setisDisable] = useState(false);
+  const navigate = useNavigate();
 
   // email validation
   function isValidEmail(email: string) {
     return /\S+@\S+\.\S+/.test(email);
   }
+
+  // e-mail send handler
+  const checkoutHandler = async () => {
+    setisDisable(true);
+    await checkOut(form.name, form.email, orderId.toString());
+    console.log("E-mail's sent!");
+    navigate('/thankyou');
+  };
   const handleSetState = (input: string) => (e: any) => {
     if (input === 'email') {
       if (isValidEmail(e.target.value)) {
@@ -126,18 +137,19 @@ export default function Order() {
           <OrderDetails />
           <button
             disabled={
-              form.name != '' &&
-              form.post != '' &&
-              form.suburb != '' &&
-              form.state != '' &&
-              form.country != '' &&
-              form.email != '' &&
-              message == ''
-                ? false
-                : true
+              form.name == '' ||
+              form.post == '' ||
+              form.suburb == '' ||
+              form.state == '' ||
+              form.country == '' ||
+              form.email == '' ||
+              message != '' ||
+              isDisable
+                ? true
+                : false
             }
             className="btn btn-secondary"
-            onClick={() => checkOut(form.name, form.email, orderId.toString())}
+            onClick={() => checkoutHandler()}
           >
             Checkout
           </button>
