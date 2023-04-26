@@ -12,11 +12,12 @@ This Online Grocery Store App stands for quick and reliable online grocery shopp
 
 ## 🚀 Run Locally
 Before you run the project locally, you must meet the prerequisites.
+### Prerequisites
 - Install Docker Desktop
 - Install Git CLI
-- All the secrets
-    - .env in Laravel
-    - In .env, you're required to replace SMTP screats to       activate sending email functionality.
+- All the secrets (-> Database and SMTP server secrets)
+    - Prepare .env in Laravel *(If you're authorized person, I personally provided you with .env file via restricted-access link. You just download and place the .env file under online-grocerystore-webapp> backend> src directory.)*
+    - In .env, you're required to replace SMTP screats to activate sending email functionality as well as Database secrets to access MySQL server.
     - For more information, have a look at [How to Use the Gmail SMTP Server to Send Emails for Free](https://kinsta.com/blog/gmail-smtp-server/)
 
 Once you got all requirements, clone the project
@@ -40,7 +41,7 @@ if it's used, kill it.
 ```bash
   sudo kill <PID>
 ```
-Start up containers
+Start up containers *(Note: Please check again if you got .env file as it described in Prerequisites)*
 
 ```bash
   docker-compose up --build
@@ -56,13 +57,19 @@ Then, install the libraries with composer
 ```bash
   composer install
 ```
+Please hold tight until your composer finishes installing all the required Laravel libraries.
+Once all the libraries are installed successfully, you'll see the outputs, like demonstrated below.
+
+![image](https://user-images.githubusercontent.com/74392116/234470509-b82b2c56-343e-4ab5-a385-1075808c9cab.png)
 
 Access to http://localhost:8000
 
 
 ## Demo
 
-Insert gif or link to demo
+Insert 
+
+https://user-images.githubusercontent.com/74392116/234477645-ae6b92c0-0b79-49d7-978a-f0b213d78847.mov
 
 
 ## Features
