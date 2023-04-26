@@ -62,7 +62,10 @@ Once all the libraries are installed successfully, you'll see the outputs, like 
 
 ![image](https://user-images.githubusercontent.com/74392116/234470509-b82b2c56-343e-4ab5-a385-1075808c9cab.png)
 
-Access to http://localhost:8000
+If you can observe the output from docker as shown below, 
+![image](https://user-images.githubusercontent.com/74392116/234479224-cfc5ae4e-9405-4596-9d49-1f891bccb78b.png)
+
+access to http://localhost:8000 😍
 
 
 ## Demo
